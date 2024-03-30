@@ -1,0 +1,50 @@
+name: Build
+
+on:
+  push:
+    tags:
+      - 'v*'
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    env:
+      HTTP_PROXY: ${{ vars.PROXY }}
+      HTTPS_PROXY: ${{ vars.PROXY }}
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+          fetch-tags: true
+      - name: Setup pnpm
+        uses: pnpm/action-setup@v2
+        with:
+          version: 8
+      - name: Setup Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          cache: 'pnpm'
+      - name: Build package
+        run: |
+          pnpm install
+          pnpm run build
+      - name: Get git tags
+        id: git_tags
+        run: |
+          current=$(git describe --abbrev=0 --tags)
+          echo "current=${current}" >> $GITHUB_OUTPUT
+          prev=$(git describe --abbrev=0 --tags `git rev-list --tags --skip=1 --max-count=1`)
+          echo "prev=${prev}" >> $GITHUB_OUTPUT
+      - name: Create release
+        uses: akkuman/gitea-release-action@v1
+        env:
+          NODE_OPTIONS: '--experimental-fetch' # if nodejs < 18
+        with:
+          server_url: ${{ vars.SERVER }}
+          files: |-
+            release/**
+          token: ${{ secrets.GITHUB_TOKEN }}
+          name: Release ${{ steps.git_tags.outputs.current }}
+          body: "See: [${{ steps.git_tags.outputs.prev }}...${{ steps.git_tags.outputs.current }}](/${{ gitea.repository }}/compare/${{ steps.git_tags.outputs.prev }}...${{ steps.git_tags.outputs.current }})."
