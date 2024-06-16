@@ -1,11 +1,11 @@
 import path from 'node:path';
 import { defineConfig, type PluginOption, ProxyOptions } from 'vite';
-import vue from '@vitejs/plugin-vue';
+import Vue from '@vitejs/plugin-vue';
 import Components from 'unplugin-vue-components/vite';
 import { AntDesignVueResolver } from 'unplugin-vue-components/resolvers';
+import ZipPack from 'vite-plugin-zip-pack';
 import dotenv from 'dotenv';
 import packageJson from './package.json';
-import zipPack from 'vite-plugin-zip-pack';
 
 dotenv.config();
 
@@ -13,9 +13,11 @@ const productionMode = process.env.NODE_ENV === 'production';
 /** Backend development mode */
 const goDev = process.env.GO_MODE === 'development';
 const zipMode = process.env.ZIP_MODE === '1';
+const devAdminPwd = process.env.DEV_ADMIN_PWD;
+const proAdminPwd = process.env.PRO_ADMIN_PWD;
 
 const plugins: PluginOption[] = [
-  vue(),
+  Vue(),
   Components({
     dts: true,
     resolvers: [
@@ -34,7 +36,7 @@ const plugins: PluginOption[] = [
 
 if (zipMode) {
   plugins.push(
-    zipPack({
+    ZipPack({
       inDir: 'dist',
       outDir: 'release',
       outFileName: `${packageJson.name}_v${packageJson.version}.zip`,
@@ -50,6 +52,9 @@ if (!productionMode) {
   const serverHttp = goDev ? devServer : proServer || devServer;
   proxy = {
     '/api': serverHttp,
+    '/assets': serverHttp,
+    '/admin': serverHttp,
+    '/favicon.ico': serverHttp,
   };
 
   if (!goDev) {
@@ -63,6 +68,10 @@ const now = new Date();
 export default defineConfig({
   build: {
     chunkSizeWarningLimit: 1024,
+    assetsDir: 'manager-assets',
+    rollupOptions: {
+      input: path.resolve(__dirname, 'manager.html'),
+    },
   },
   resolve: {
     alias: {
@@ -76,8 +85,11 @@ export default defineConfig({
     'import.meta.env.DATE': JSON.stringify(
       `${now.getFullYear()}-${(now.getMonth() + 1).toString().padStart(2, '0')}-${now.getDate().toString().padStart(2, '0')}T${now.toLocaleTimeString()}+0800`
     ),
+    'import.meta.env.DEV_ADMIN_PWD': JSON.stringify(devAdminPwd),
+    'import.meta.env.PRO_ADMIN_PWD': JSON.stringify(proAdminPwd),
   },
   server: {
     proxy,
+    open: 'manager.html',
   },
 });

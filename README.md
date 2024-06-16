@@ -1,3 +1,3 @@
 # slender-manager
 
-Website navigation project management page.
+Website navigation manager page.

@@ -1,0 +1,194 @@
+{
+  "menus": {
+    "bookmarks": "书签列表",
+    "folders": "文件夹列表",
+    "files": "图标列表",
+    "logins": "登录日志",
+    "settings": "程序设置",
+    "about": "关于程序"
+  },
+  "data": {
+    "name": {
+      "text": "名称",
+      "tip": "条目名称"
+    },
+    "url": {
+      "text": "网址",
+      "tip": "书签网址"
+    },
+    "description": {
+      "text": "描述",
+      "tip": "条目详情"
+    },
+    "icon": {
+      "text": "图标",
+      "tip": "书签图标"
+    },
+    "privacy": {
+      "text": "私密性",
+      "tip": "私密状态"
+    },
+    "weight": {
+      "text": "权重",
+      "tip": "排序的权重，权重越高优先级越高"
+    },
+    "createdTime": {
+      "text": "创建时间",
+      "tip": "条目创建时间"
+    },
+    "modifiedTime": {
+      "text": "修改时间",
+      "tip": "条目修改时间"
+    },
+    "large": {
+      "text": "大卡片",
+      "tip": "将文件夹放在顶部，并将书签显示为大型卡片模块"
+    },
+    "folder": {
+      "text": "文件夹",
+      "tip": "书签所属的文件夹"
+    },
+    "files": {
+      "text": "文件",
+      "tip": "附加到书签的图标文件"
+    },
+    "visits": {
+      "text": "访问量",
+      "tip": "对书签的访问次数"
+    }
+  },
+  "actions": {
+    "action": "动作",
+    "add": "新增",
+    "edit": "编辑",
+    "ok": "确定",
+    "delete": "删除",
+    "cancel": "取消",
+    "yes": "是",
+    "no": "否",
+    "search": "搜索",
+    "searchPlaceholder": "搜索{msg}",
+    "reset": "重置",
+    "empty": "无数据",
+    "clear": "清除",
+    "save": "保存",
+    "setPrivacy": "设置私密性",
+    "editWeight": "编辑权重",
+    "setWeight": "设置权重",
+    "incWeight": "增减权重",
+    "logout": "退出",
+    "download": "下载"
+  },
+  "folders": {
+    "bookmarkTotal": "书签数量",
+    "modalTitle": "{msg}文件夹",
+    "getErr": "无法获取文件夹！",
+    "added": "新增文件夹完成",
+    "addErr": "无法新增文件夹！",
+    "updated": "更新文件夹完成",
+    "updateErr": "无法更新文件夹！",
+    "deleted": "删除文件夹完成",
+    "deleteErr": "无法删除文件夹！",
+    "deleteConfirm": "您确定要删除此文件夹吗？ | 您确定要删除这些文件夹吗？",
+    "setLarge": "设置大卡片",
+    "batched": "批处理文件夹完成",
+    "batchErr": "无法批处理文件夹"
+  },
+  "bookmarks": {
+    "visits": "访问量",
+    "modalTitle": "{msg}书签",
+    "getErr": "无法获取书签！",
+    "added": "新增书签完成",
+    "addErr": "无法新增书签！",
+    "updated": "更新书签完成",
+    "updateErr": "无法更新书签！",
+    "deleted": "删除书签完成",
+    "deleteErr": "无法删除书签！",
+    "deleteConfirm": "您确定要删除此书签吗？ | 您确定要删除这些书签吗？",
+    "noFolder": "无文件夹",
+    "noIcon": "无图标",
+    "visitsClearConfirm": "您确定要清除书签的访问量吗？",
+    "iconInputPlaceholder": "输入图标网址",
+    "ungrouped": "未分组",
+    "clearVisits": "清除访问量",
+    "setFolder": "Set Folder",
+    "batched": "批处理书签完成",
+    "batchErr": "无法批处理书签",
+    "import": "导入",
+    "imported": "未导入书签 | 导入一个书签 | {n}个书签已导入",
+    "importErr": "无法导入书签！",
+    "export": "导出",
+    "exported": "书签已导出",
+    "exportErr": "无法导出书签！",
+    "builtInIcon": "内置",
+    "inputIcon": "输入"
+  },
+  "files": {
+    "upload": "上传",
+    "limitWarn": "文件大小超过 1MB！",
+    "readSizeErr": "无法读取文件大小！",
+    "uploaded": "{msg} 上传完成",
+    "uploadErr": "无法上传 {msg}",
+    "deleted": "{msg} 已删除",
+    "deleteErr": "无法删除 {msg}",
+    "path": "路径",
+    "deleteConfirm": "您确定要删除此文件吗？",
+    "used": "已使用",
+    "removeUnused": "移除未使用",
+    "removeUnusedConfirm": "你确定要移除所有未使用的文件吗？",
+    "UnusedRemoved": "已移除所有未使用的文件",
+    "UnusedRemoveErr": "无法移除所有未使用的文件！"
+  },
+  "logins": {
+    "loginTime": "登录时间",
+    "identity": "身份",
+    "admin": "管理员",
+    "user": "用户",
+    "clearConfirm": "你确定要清除登录日志吗？",
+    "cleared": "已清除登录日志",
+    "clearErr": "无法清除登录日志！",
+    "logout": "退出",
+    "logoutAll": "注销全部",
+    "logoutAllConfirm": "您确定要注销所有用户吗？",
+    "logoutAllErr": "无法注销所有用户！"
+  },
+  "validator": {
+    "required": "{msg}是必需的！",
+    "incorrect": "表单格式不正确！"
+  },
+  "settings": {
+    "contentSetting": "内容设置",
+    "websiteTitle": "网站标题",
+    "customFooter": "自定义页脚代码",
+    "elementSetting": "元素设置",
+    "showSidebar": "显示文件夹侧边栏",
+    "showSearchInput": "显示搜索输入框",
+    "showScrollTop": "显示回到顶部按钮",
+    "moduleSetting": "模块设置",
+    "showLatest": "显示最近新增书签的模块",
+    "latestTotal": "最近新增书签模块中的书签数量",
+    "showHot": "显示热门书签的模块",
+    "hotTotal": "热门书签模块中的书签数量",
+    "bookmarkSetting": "书签设置",
+    "useLetterIcon": "使用首字母作为图标(未设置书签图标时)",
+    "openInNewWindow": "始终在新窗口中打开书签",
+    "readErr": "无法读取配置！",
+    "updated": "配置已更新",
+    "updateErr": "无法更新配置！"
+  },
+  "about": {
+    "appVersion": "程序版本",
+    "appBuildDate": "程序构建日期",
+    "managerVersion": "管理器版本",
+    "managerBuildDate": "管理器构建日期",
+    "arch": "系统架构",
+    "appLink": "程序链接",
+    "managerLink": "管理器链接",
+    "official": "正式构建",
+    "dev": "开发构建",
+    "mdiVersion": "Material Design 版本",
+    "mdiLink": "Material Design 链接",
+    "siVersion": "Simple Icons 版本",
+    "siLink": "Simple Icons 链接"
+  }
+}

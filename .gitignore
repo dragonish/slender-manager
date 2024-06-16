@@ -132,3 +132,4 @@ dist
 
 # define
 /release
+.vscode/settings.json

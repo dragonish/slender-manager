@@ -1,0 +1,194 @@
+{
+  "menus": {
+    "bookmarks": "Bookmarks",
+    "folders": "Folders",
+    "files": "Files",
+    "logins": "Login Log",
+    "settings": "Settings",
+    "about": "About"
+  },
+  "data": {
+    "name": {
+      "text": "Name",
+      "tip": "entry name"
+    },
+    "url": {
+      "text": "URL",
+      "tip": "bookmark url"
+    },
+    "description": {
+      "text": "Description",
+      "tip": "entry detail"
+    },
+    "icon": {
+      "text": "Icon",
+      "tip": "bookmark icon"
+    },
+    "privacy": {
+      "text": "Privacy",
+      "tip": "privacy status"
+    },
+    "weight": {
+      "text": "Weight",
+      "tip": "the weight of the sort, higher weight to higher priority"
+    },
+    "createdTime": {
+      "text": "Created Time",
+      "tip": "entry created time"
+    },
+    "modifiedTime": {
+      "text": "Modified Time",
+      "tip": "entry modified time"
+    },
+    "large": {
+      "text": "Large",
+      "tip": "put the folder top and display bookmarks as large card modules"
+    },
+    "folder": {
+      "text": "Folder",
+      "tip": "the folder to which the bookmark belongs"
+    },
+    "files": {
+      "text": "Files",
+      "tip": "icon files attached to the bookmark"
+    },
+    "visits": {
+      "text": "Visits",
+      "tip": "number of visits to the bookmark"
+    }
+  },
+  "actions": {
+    "action": "Action",
+    "add": "Add",
+    "edit": "Edit",
+    "ok": "OK",
+    "delete": "Delete",
+    "cancel": "Cancel",
+    "yes": "Yes",
+    "no": "No",
+    "search": "Search",
+    "searchPlaceholder": "Search {msg}",
+    "reset": "Reset",
+    "empty": "No Data",
+    "clear": "Clear",
+    "save": "Save",
+    "setPrivacy": "Set Privacy",
+    "editWeight": "Edit Weight",
+    "setWeight": "Set Weight",
+    "incWeight": "Inc Weight",
+    "logout": "Logout",
+    "download": "Download"
+  },
+  "folders": {
+    "bookmarkTotal": "Bookmark Total",
+    "modalTitle": "{msg} folder",
+    "getErr": "Unable to get folder!",
+    "added": "Add folder completed",
+    "addErr": "Unable to add folder!",
+    "updated": "Update folder completed",
+    "updateErr": "Unable to update folder!",
+    "deleted": "Delete folder completed",
+    "deleteErr": "Unable to delete folder!",
+    "deleteConfirm": "Are you sure you want to delete this folder? | Are you sure you want to delete these folders?",
+    "setLarge": "Set Large",
+    "batched": "Complete batch folders",
+    "batchErr": "Unable to batch folders"
+  },
+  "bookmarks": {
+    "visits": "Visits",
+    "modalTitle": "{msg} bookmark",
+    "getErr": "Unable to get bookmark!",
+    "added": "Add bookmark completed",
+    "addErr": "Unable to add bookmark!",
+    "updated": "Update bookmark completed",
+    "updateErr": "Unable to update bookmark!",
+    "deleted": "Delete bookmark completed",
+    "deleteErr": "Unable to delete bookmark!",
+    "deleteConfirm": "Are you sure you want to delete this bookmark? | Are you sure you want to delete these bookmarks?",
+    "noFolder": "No Folder",
+    "noIcon": "No Icon",
+    "visitsClearConfirm": "Are you sure you want to clear bookmark visits?",
+    "iconInputPlaceholder": "Enter the icon URL",
+    "ungrouped": "Ungrouped",
+    "clearVisits": "Clear Visits",
+    "setFolder": "Set Folder",
+    "batched": "Complete batch bookmarks",
+    "batchErr": "Unable to batch bookmarks",
+    "import": "Import",
+    "imported": "No bookmarks imported | Imported a bookmark | {n} bookmarks imported",
+    "importErr": "Unable to import bookmarks!",
+    "export": "Export",
+    "exported": "Bookmarks exported",
+    "exportErr": "Unable to export bookmarks!",
+    "builtInIcon": "Built-in",
+    "inputIcon": "Input"
+  },
+  "files": {
+    "upload": "Upload",
+    "limitWarn": "the file size exceeds 1MB!",
+    "readSizeErr": "unable to read file size!",
+    "uploaded": "{msg} upload completed",
+    "uploadErr": "unable to upload {msg}",
+    "deleted": "{msg} deleted",
+    "deleteErr": "unable to delete {msg}",
+    "path": "Path",
+    "deleteConfirm": "Are you sure you want to delete this file?",
+    "used": "Used",
+    "removeUnused": "Remove Unused",
+    "removeUnusedConfirm": "Are you sure you want to remove all unused files?",
+    "UnusedRemoved": "All unused files removed",
+    "UnusedRemoveErr": "Unable to remove all unused files!"
+  },
+  "logins": {
+    "loginTime": "Login Time",
+    "identity": "Identity",
+    "admin": "Admin",
+    "user": "User",
+    "clearConfirm": "Are you sure you want to clear login log?",
+    "cleared": "Login log cleared",
+    "clearErr": "Unable to clear login log!",
+    "logout": "Logout",
+    "logoutAll": "Logout All",
+    "logoutAllConfirm": "Are you sure you want to logout all users?",
+    "logoutAllErr": "Unable to logout all users!"
+  },
+  "validator": {
+    "required": "{msg} is required!",
+    "incorrect": "The form format is incorrect!"
+  },
+  "settings": {
+    "contentSetting": "Content Setting",
+    "websiteTitle": "Website title",
+    "customFooter": "Custom footer code",
+    "elementSetting": "Element Setting",
+    "showSidebar": "Show folders sidebar",
+    "showSearchInput": "Show search input box",
+    "showScrollTop": "Show back to top button",
+    "moduleSetting": "Module Setting",
+    "showLatest": "Show the module of latest added bookmarks",
+    "latestTotal": "Number of bookmarks in the latest module",
+    "showHot": "Show the module of hot bookmarks",
+    "hotTotal": "Number of bookmarks in the hot module",
+    "bookmarkSetting": "Bookmark Setting",
+    "useLetterIcon": "Use first letter as icon (When the bookmark icon is not set)",
+    "openInNewWindow": "Always open the bookmark in the new window",
+    "readErr": "Unable to read the config!",
+    "updated": "Config updated",
+    "updateErr": "Unable to update config!"
+  },
+  "about": {
+    "appVersion": "Program version",
+    "appBuildDate": "Program build date",
+    "managerVersion": "Manager version",
+    "managerBuildDate": "Manager build date",
+    "arch": "System architecture",
+    "appLink": "Program link",
+    "managerLink": "Manager link",
+    "official": "official build",
+    "dev": "dev build",
+    "mdiVersion": "Material Design version",
+    "mdiLink": "Material Design link",
+    "siVersion": "Simple Icons version",
+    "siLink": "Simple Icons link"
+  }
+}

@@ -1,0 +1,23 @@
+body {
+  margin: 0;
+  min-width: 320px;
+  min-height: 100vh;
+  overflow: hidden;
+}
+
+
+.slender-css-no-select,
+.ant-segmented-item-label,
+.ant-table-column-title {
+  user-select: none;
+}
+
+@media screen and (max-width: 576px) {
+  body {
+    min-height: 100dvh;
+  }
+
+  #app {
+    height: 100dvh;
+  }
+}
