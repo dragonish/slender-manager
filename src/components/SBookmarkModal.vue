@@ -31,7 +31,7 @@
       </a-form-item>
       <a-form-item :label="t('data.icon.text')" :tooltip="t('data.icon.tip')">
         <a-space>
-          <a-avatar shape="square" :src="icon"></a-avatar>
+          <a-avatar shape="square" style="background-color: #dfdfdf" :src="icon"></a-avatar>
           <a-segmented v-model:value="iconSelected" :options="segmentOptions" @change="onSegmentedChange">
             <template #label="{ title }">
               {{ title }}
