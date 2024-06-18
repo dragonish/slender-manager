@@ -1,8 +1,25 @@
 import 'mocha';
 import { expect } from 'chai';
-import { pathMatcher } from '@/common/url';
+import { findUrlKeys, pathMatcher } from '@/common/url';
 
 describe('Test url', function () {
+  it('findUrlKeys', function () {
+    expect(findUrlKeys('https://{hostname}:8888')).to.deep.eq([
+      {
+        text: 'https://',
+        isUrlKey: false,
+      },
+      {
+        text: '{hostname}',
+        isUrlKey: true,
+      },
+      {
+        text: ':8888',
+        isUrlKey: true,
+      },
+    ]);
+  });
+
   it('pathMatcher', function () {
     expect(pathMatcher('/abc', '/abc')).to.be.true;
     expect(pathMatcher('/abc', '/abcd')).to.be.false;

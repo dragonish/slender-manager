@@ -42,6 +42,7 @@ declare module 'vue' {
     RouterLink: typeof import('vue-router')['RouterLink']
     RouterView: typeof import('vue-router')['RouterView']
     SBookmarkModal: typeof import('./src/components/SBookmarkModal.vue')['default']
+    SBookmarkUrl: typeof import('./src/components/SBookmarkUrl.vue')['default']
     SBoolState: typeof import('./src/components/SBoolState.vue')['default']
     SFolderForm: typeof import('./src/components/SFolderForm.vue')['default']
     SFolderModal: typeof import('./src/components/SFolderModal.vue')['default']

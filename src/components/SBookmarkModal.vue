@@ -24,6 +24,11 @@
         <a-input v-model:value="form.name"></a-input>
       </a-form-item>
       <a-form-item :label="t('data.url.text')" :tooltip="t('data.url.tip')" name="url">
+        <template #extra>
+          <template v-for="item in urlKeys" :key="item">
+            <a-tag class="slender-bookmark-extra-tag" :title="getLocation(item)" @click="onTagClick(item)">{{ item }}</a-tag>
+          </template>
+        </template>
         <a-input v-model:value="form.url"></a-input>
       </a-form-item>
       <a-form-item :label="t('data.description.text')" :tooltip="t('data.description.tip')" name="description">
@@ -129,6 +134,7 @@ import { getBookmarkFolderList } from '@/apis/folders';
 import { deleteFile } from '@/apis/files';
 import { getIcons } from '@/apis/icons';
 import { getBuiltInIcon } from '@/common/serializer';
+import { urlKeys, getLocation } from '@/common/url';
 
 type IconSelectedType = 'builtIn' | 'input';
 type BookmarkForm = Omit<BookmarkResData, 'icon' | 'files'>;
@@ -493,4 +499,18 @@ function onFilePreview(file: UploadFile<{ data: FileBaseData }>) {
     icon.value = iconForm.input;
   }
 }
+
+function onTagClick(key: keyof Location) {
+  form.url += `{${key}}`;
+  if (form.url) {
+    formRef.value?.validate();
+  }
+}
 </script>
+
+<style>
+.ant-tag.slender-bookmark-extra-tag {
+  cursor: pointer;
+  padding-inline: 6px;
+}
+</style>

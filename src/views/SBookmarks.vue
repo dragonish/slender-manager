@@ -41,7 +41,10 @@
       </a-space>
     </template>
     <template #bodyCell="{ column, record }">
-      <template v-if="column.key === 'icon'">
+      <template v-if="column.key === 'url'">
+        <s-bookmark-url :url="record[column.key]"></s-bookmark-url>
+      </template>
+      <template v-else-if="column.key === 'icon'">
         <a-avatar
           v-if="record[column.key]"
           shape="square"
@@ -100,6 +103,7 @@ import SBookmarkModal from '@/components/SBookmarkModal.vue';
 import SPrivacyForm from '@/components/SPrivacyForm.vue';
 import SWeightForm from '@/components/SWeightForm.vue';
 import SFolderForm from '@/components/SFolderForm.vue';
+import SBookmarkUrl from '@/components/SBookmarkUrl.vue';
 
 const { t } = useI18n<{
   message: MessageSchema;
