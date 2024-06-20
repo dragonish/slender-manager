@@ -15,7 +15,7 @@ describe('Test url', function () {
       },
       {
         text: ':8888',
-        isUrlKey: true,
+        isUrlKey: false,
       },
     ]);
   });
