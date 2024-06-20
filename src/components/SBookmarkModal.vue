@@ -21,7 +21,7 @@
     </template>
     <a-form ref="formRef" :model="form" name="bookmark_form_in_modal" :disabled="fetching" :rules>
       <a-form-item :label="t('data.name.text')" :tooltip="t('data.name.tip')" name="name">
-        <a-input v-model:value="form.name"></a-input>
+        <a-input v-model:value="form.name" ref="nameInput"></a-input>
       </a-form-item>
       <a-form-item :label="t('data.url.text')" :tooltip="t('data.url.tip')" name="url">
         <template #extra>
@@ -121,7 +121,7 @@
 </template>
 
 <script setup lang="ts">
-import { ref, reactive, computed, h, watch } from 'vue';
+import { ref, reactive, computed, h, watch, nextTick } from 'vue';
 import { useRequest } from 'vue-request';
 import { useI18n } from 'vue-i18n';
 import { MessageSchema } from '@/locales/schema';
@@ -185,6 +185,8 @@ const iconForm = reactive<Record<IconSelectedType, string>>({
 const fileList = ref<UploadFile<{ data: FileBaseData }>[]>([]);
 
 const clearVisitsState = ref(false);
+
+const nameInput = ref<HTMLInputElement>();
 
 const { run: getInfoRun, loading: getLoading } = useRequest(getBookmark, {
   onSuccess: data => {
@@ -323,6 +325,10 @@ watch(
         // read data
         getInfoRun(props.id);
       }
+
+      nextTick(() => {
+        nameInput.value?.focus();
+      });
     }
   }
 );

@@ -16,7 +16,7 @@
     </template>
     <a-form ref="formRef" :model="form" name="folder_form_in_modal" :disabled="fetching" :rules>
       <a-form-item :label="t('data.name.text')" :tooltip="t('data.name.tip')" name="name">
-        <a-input v-model:value="form.name"></a-input>
+        <a-input v-model:value="form.name" ref="nameInput"></a-input>
       </a-form-item>
       <a-form-item :label="t('data.description.text')" :tooltip="t('data.description.tip')" name="description">
         <a-input v-model:value="form.description"></a-input>
@@ -41,7 +41,7 @@
 </template>
 
 <script setup lang="ts">
-import { ref, reactive, computed, watch } from 'vue';
+import { ref, reactive, computed, watch, nextTick } from 'vue';
 import { useRequest } from 'vue-request';
 import { useI18n } from 'vue-i18n';
 import { MessageSchema } from '@/locales/schema';
@@ -75,6 +75,8 @@ const emit = defineEmits<{
 const formRef = ref<FormInstance>();
 
 const form = reactive<FolderBaseData>(generateForm());
+
+const nameInput = ref<HTMLInputElement>();
 
 const { run: getRun, loading: getLoading } = useRequest(getFolder, {
   onSuccess: data => {
@@ -134,6 +136,10 @@ watch(
         // read data
         getRun(props.id);
       }
+
+      nextTick(() => {
+        nameInput.value?.focus();
+      });
     }
   }
 );
