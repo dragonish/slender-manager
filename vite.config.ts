@@ -13,8 +13,10 @@ const productionMode = process.env.NODE_ENV === 'production';
 /** Backend development mode */
 const goDev = process.env.GO_MODE === 'development';
 const zipMode = process.env.ZIP_MODE === '1';
-const devAdminPwd = process.env.DEV_ADMIN_PWD;
-const proAdminPwd = process.env.PRO_ADMIN_PWD;
+const envDevServer = process.env.DEV_SERVER;
+const envDevAdminPwd = process.env.DEV_ADMIN_PWD;
+const envProServer = process.env.PRO_SERVER;
+const envProAdminPwd = process.env.PRO_ADMIN_PWD;
 
 const plugins: PluginOption[] = [
   Vue(),
@@ -46,8 +48,8 @@ if (zipMode) {
 
 let proxy: Record<string, string | ProxyOptions> | undefined;
 if (!productionMode) {
-  const devServer = process.env.DEV_SERVER || 'http://localhost:8080';
-  const proServer = process.env.PRO_SERVER;
+  const devServer = envDevServer || 'http://localhost:8080';
+  const proServer = envProServer;
 
   const serverHttp = goDev ? devServer : proServer || devServer;
   proxy = {
@@ -88,8 +90,8 @@ export default defineConfig({
         gmtOffset >= 0 ? '+' : '-'
       }${(gmtOffset * 100).toString().padStart(4, '0')}`
     ),
-    'import.meta.env.DEV_ADMIN_PWD': JSON.stringify(devAdminPwd),
-    'import.meta.env.PRO_ADMIN_PWD': JSON.stringify(proAdminPwd),
+    'import.meta.env.DEV_ADMIN_PWD': JSON.stringify(envDevAdminPwd),
+    'import.meta.env.PRO_ADMIN_PWD': JSON.stringify(envProAdminPwd),
   },
   server: {
     proxy,
