@@ -135,6 +135,7 @@ import { deleteFile } from '@/apis/files';
 import { getIcons } from '@/apis/icons';
 import { getBuiltInIcon } from '@/common/serializer';
 import { urlKeys, getLocation } from '@/common/url';
+import { builtInFilterOption } from '@/common/ui';
 
 type IconSelectedType = 'builtIn' | 'input';
 type BookmarkForm = Omit<BookmarkResData, 'icon' | 'files'>;
@@ -354,20 +355,6 @@ const onBuiltInSelect: SelectProps['onSelect'] = (value: unknown) => {
 
 const onIconInputChange: InputProps['onChange'] = evt => {
   icon.value = evt.target.value || '';
-};
-
-const builtInFilterOption: SelectProps['filterOption'] = (inputValue, option) => {
-  if (option?.value) {
-    const oVal = option.label.toLowerCase();
-    const iValArr = inputValue.toLowerCase().split(/\s+/);
-    for (const item of iValArr) {
-      if (oVal.indexOf(item) === -1) {
-        return false;
-      }
-    }
-    return true;
-  }
-  return false;
 };
 
 const folderFilterOption: SelectProps['filterOption'] = (inputValue, option) => {
