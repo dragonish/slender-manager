@@ -98,6 +98,7 @@ import { batchBookmark, getBookmarkList, importBookmarks } from '@/apis/bookmark
 import { getBookmarkFolderList } from '@/apis/folders';
 import { getBuiltInIcon } from '@/common/serializer';
 import { openTextFile, downloadTextFile } from '@/common/file';
+import { customFilterIcon } from '@/common/ui';
 import SBoolState from '@/components/SBoolState.vue';
 import SBookmarkModal from '@/components/SBookmarkModal.vue';
 import SPrivacyForm from '@/components/SPrivacyForm.vue';
@@ -164,11 +165,6 @@ const form = reactive({
 });
 
 const [modal, contextHolder] = Modal.useModal();
-
-const customFilterIcon = (opt: { filtered: boolean }) =>
-  h(SearchOutlined, {
-    style: `color: ${opt.filtered ? '#108ee9' : 'unset'}`,
-  });
 
 const columns: TableColumnType<BookmarkListItem>[] = [
   {

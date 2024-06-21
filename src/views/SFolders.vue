@@ -80,6 +80,7 @@ import { DownOutlined, EditOutlined, SearchOutlined } from '@ant-design/icons-vu
 import { MessageSchema } from '@/locales/schema';
 import { useFolderStore } from '@/stores/folder';
 import { batchFolder, getFolderList } from '@/apis/folders';
+import { customFilterIcon } from '@/common/ui';
 import SBoolState from '@/components/SBoolState.vue';
 import SFolderModal from '@/components/SFolderModal.vue';
 import SLargeForm from '@/components/SLargeForm.vue';
@@ -116,11 +117,6 @@ const form = reactive({
 });
 
 const [modal, contextHolder] = Modal.useModal();
-
-const customFilterIcon = (opt: { filtered: boolean }) =>
-  h(SearchOutlined, {
-    style: `color: ${opt.filtered ? '#108ee9' : 'unset'}`,
-  });
 
 const columns: TableColumnType<FolderListItem>[] = [
   {
