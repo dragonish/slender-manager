@@ -3,7 +3,7 @@ import type { FolderListParams } from '@/apis/folders';
 
 interface FolderStore {
   params: FolderListParams;
-  selectdRowKeys: Key[];
+  selectedRowKeys: Key[];
 }
 
 export const useFolderStore = defineStore('folder', {
@@ -14,6 +14,6 @@ export const useFolderStore = defineStore('folder', {
       order: 'weight',
       privacy: null,
     },
-    selectdRowKeys: [],
+    selectedRowKeys: [],
   }),
 });

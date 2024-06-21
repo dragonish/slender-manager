@@ -3,7 +3,7 @@ import type { BookmarkListParams } from '@/apis/bookmarks';
 
 interface BookmarkStore {
   params: BookmarkListParams;
-  selectdRowKeys: Key[];
+  selectedRowKeys: Key[];
 }
 
 export const useBookmarkStore = defineStore('bookmark', {
@@ -14,6 +14,6 @@ export const useBookmarkStore = defineStore('bookmark', {
       order: 'created-time',
       privacy: null,
     },
-    selectdRowKeys: [],
+    selectedRowKeys: [],
   }),
 });

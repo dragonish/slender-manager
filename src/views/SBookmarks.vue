@@ -8,7 +8,7 @@
     :columns
     :pagination
     :loading="loading || folderLoading || batchLoading || importLoading"
-    :row-selection="{ fixed: true, selectedRowKeys: bookmarkStore.selectdRowKeys, onChange: onSelectChange }"
+    :row-selection="{ fixed: true, selectedRowKeys: bookmarkStore.selectedRowKeys, onChange: onSelectChange }"
     :scroll="{ x: true }"
     @change="onTableChange"
   >
@@ -18,7 +18,7 @@
           <a-divider type="vertical" />
         </template>
         <a-button type="primary" size="small" @click="onAdd">{{ t('actions.add') }}</a-button>
-        <a-dropdown :disabled="bookmarkStore.selectdRowKeys.length === 0">
+        <a-dropdown :disabled="bookmarkStore.selectedRowKeys.length === 0">
           <template #overlay>
             <a-menu @click="onBatchEdit">
               <a-menu-item key="delete">{{ t('actions.delete') }}</a-menu-item>
@@ -140,7 +140,7 @@ const { run: batchRun, loading: batchLoading } = useRequest(batchBookmark, {
       message.error(t('bookmarks.batchErr'));
     } else {
       message.success(t('bookmarks.batched'));
-      bookmarkStore.selectdRowKeys = [];
+      bookmarkStore.selectedRowKeys = [];
       refresh();
     }
   },
@@ -283,7 +283,7 @@ const columns: TableColumnType<BookmarkListItem>[] = [
 ];
 
 const onSelectChange = (selectedRowKeys: Key[]) => {
-  bookmarkStore.selectdRowKeys = selectedRowKeys;
+  bookmarkStore.selectedRowKeys = selectedRowKeys;
 };
 
 const locale: TableProps['locale'] = {
@@ -374,7 +374,7 @@ function onEdit(id: number) {
 }
 
 const onBatchEdit: MenuProps['onClick'] = e => {
-  if (bookmarkStore.selectdRowKeys.length === 0) {
+  if (bookmarkStore.selectedRowKeys.length === 0) {
     return;
   }
 
@@ -385,10 +385,10 @@ const onBatchEdit: MenuProps['onClick'] = e => {
         title: t('actions.delete'),
         okText: t('actions.ok'),
         cancelText: t('actions.cancel'),
-        content: t('bookmarks.deleteConfirm', bookmarkStore.selectdRowKeys.length),
+        content: t('bookmarks.deleteConfirm', bookmarkStore.selectedRowKeys.length),
         onOk() {
           batchRun({
-            dataSet: bookmarkStore.selectdRowKeys,
+            dataSet: bookmarkStore.selectedRowKeys,
             action: 'delete',
           });
         },
@@ -402,7 +402,7 @@ const onBatchEdit: MenuProps['onClick'] = e => {
         content: t('bookmarks.visitsClearConfirm'),
         onOk() {
           batchRun({
-            dataSet: bookmarkStore.selectdRowKeys,
+            dataSet: bookmarkStore.selectedRowKeys,
             action: 'clearVisits',
           });
         },
@@ -421,7 +421,7 @@ const onBatchEdit: MenuProps['onClick'] = e => {
         }),
         onOk() {
           batchRun({
-            dataSet: bookmarkStore.selectdRowKeys,
+            dataSet: bookmarkStore.selectedRowKeys,
             action: 'setPrivacy',
             payload: form.privacy,
           });
@@ -443,7 +443,7 @@ const onBatchEdit: MenuProps['onClick'] = e => {
         }),
         onOk() {
           batchRun({
-            dataSet: bookmarkStore.selectdRowKeys,
+            dataSet: bookmarkStore.selectedRowKeys,
             action: key,
             payload: form.weight,
           });
@@ -463,7 +463,7 @@ const onBatchEdit: MenuProps['onClick'] = e => {
         }),
         onOk() {
           batchRun({
-            dataSet: bookmarkStore.selectdRowKeys,
+            dataSet: bookmarkStore.selectedRowKeys,
             action: 'setFolder',
             payload: form.folder,
           });
@@ -518,12 +518,12 @@ async function onImport() {
 }
 
 async function onExport() {
-  if (bookmarkStore.selectdRowKeys.length > 0 && data.value) {
+  if (bookmarkStore.selectedRowKeys.length > 0 && data.value) {
     const list: BookmarkListItem[] = data.value[1]?.list || [];
     const exportList: BookmarkImportItem[] = [];
     for (const item of list) {
       const { id, url, name, description, icon, privacy, weight } = item;
-      if (bookmarkStore.selectdRowKeys.includes(id)) {
+      if (bookmarkStore.selectedRowKeys.includes(id)) {
         exportList.push({
           url,
           name,

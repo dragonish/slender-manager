@@ -8,7 +8,7 @@
     :columns
     :pagination
     :loading="loading || batchLoading"
-    :row-selection="{ fixed: true, selectedRowKeys: folderStore.selectdRowKeys, onChange: onSelectChange }"
+    :row-selection="{ fixed: true, selectedRowKeys: folderStore.selectedRowKeys, onChange: onSelectChange }"
     :scroll="{ x: true }"
     @change="onTableChange"
   >
@@ -18,7 +18,7 @@
           <a-divider type="vertical" />
         </template>
         <a-button type="primary" size="small" @click="onAdd">{{ t('actions.add') }}</a-button>
-        <a-dropdown :disabled="folderStore.selectdRowKeys.length === 0">
+        <a-dropdown :disabled="folderStore.selectedRowKeys.length === 0">
           <template #overlay>
             <a-menu @click="onBatchEdit">
               <a-menu-item key="delete">{{ t('actions.delete') }}</a-menu-item>
@@ -102,7 +102,7 @@ const { run: batchRun, loading: batchLoading } = useRequest(batchFolder, {
       message.error(t('folders.batchErr'));
     } else {
       message.success(t('folders.batched'));
-      folderStore.selectdRowKeys = [];
+      folderStore.selectedRowKeys = [];
       refresh();
     }
   },
@@ -208,7 +208,7 @@ const columns: TableColumnType<FolderListItem>[] = [
 ];
 
 const onSelectChange = (selectedRowKeys: Key[]) => {
-  folderStore.selectdRowKeys = selectedRowKeys;
+  folderStore.selectedRowKeys = selectedRowKeys;
 };
 
 const locale: TableProps['locale'] = {
@@ -287,7 +287,7 @@ function onEdit(id: number) {
 }
 
 const onBatchEdit: MenuProps['onClick'] = e => {
-  if (folderStore.selectdRowKeys.length === 0) {
+  if (folderStore.selectedRowKeys.length === 0) {
     return;
   }
 
@@ -298,10 +298,10 @@ const onBatchEdit: MenuProps['onClick'] = e => {
         title: t('actions.delete'),
         okText: t('actions.ok'),
         cancelText: t('actions.cancel'),
-        content: t('folders.deleteConfirm', folderStore.selectdRowKeys.length),
+        content: t('folders.deleteConfirm', folderStore.selectedRowKeys.length),
         onOk() {
           batchRun({
-            dataSet: folderStore.selectdRowKeys,
+            dataSet: folderStore.selectedRowKeys,
             action: 'delete',
           });
         },
@@ -320,7 +320,7 @@ const onBatchEdit: MenuProps['onClick'] = e => {
         }),
         onOk() {
           batchRun({
-            dataSet: folderStore.selectdRowKeys,
+            dataSet: folderStore.selectedRowKeys,
             action: 'setLarge',
             payload: form.large,
           });
@@ -340,7 +340,7 @@ const onBatchEdit: MenuProps['onClick'] = e => {
         }),
         onOk() {
           batchRun({
-            dataSet: folderStore.selectdRowKeys,
+            dataSet: folderStore.selectedRowKeys,
             action: 'setPrivacy',
             payload: form.privacy,
           });
@@ -362,7 +362,7 @@ const onBatchEdit: MenuProps['onClick'] = e => {
         }),
         onOk() {
           batchRun({
-            dataSet: folderStore.selectdRowKeys,
+            dataSet: folderStore.selectedRowKeys,
             action: key,
             payload: form.weight,
           });
