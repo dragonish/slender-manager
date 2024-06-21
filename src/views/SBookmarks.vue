@@ -63,21 +63,14 @@
       </template>
     </template>
     <template #customFilterDropdown="{ setSelectedKeys, selectedKeys, confirm, clearFilters, column }">
-      <div style="padding: 8px">
-        <a-input
-          ref="searchInput"
-          :placeholder="t('actions.searchPlaceholder', { msg: column.title })"
-          :value="selectedKeys[0]"
-          style="width: 188px; margin-bottom: 8px; display: block"
-          @change="(e: any) => setSelectedKeys(e.target?.value ? [e.target.value] : [])"
-          @pressEnter="onSearch(confirm)"
-        ></a-input>
-        <a-button type="primary" size="small" style="width: 90px; margin-right: 8px" @click="onSearch(confirm)">
-          <template #icon><search-outlined /></template>
-          {{ t('actions.search') }}
-        </a-button>
-        <a-button size="small" style="width: 90px" @click="onReset(clearFilters)">{{ t('actions.reset') }}</a-button>
-      </div>
+      <s-filter-dropdown
+        ref="filterDropdown"
+        :title="column.title"
+        :value="selectedKeys[0]"
+        :confirm
+        :clear-filters="clearFilters"
+        @change="v => setSelectedKeys(v)"
+      ></s-filter-dropdown>
     </template>
   </a-table>
   <s-bookmark-modal v-model:open="modalOpen" :id="curId" :edit="editState" @changed="refresh"></s-bookmark-modal>
@@ -90,8 +83,8 @@ import { usePagination, useRequest } from 'vue-request';
 import { useI18n } from 'vue-i18n';
 import { Modal, message } from 'ant-design-vue';
 import type { MenuProps, TableColumnType, TableProps } from 'ant-design-vue';
-import type { ColumnFilterItem, FilterDropdownProps } from 'ant-design-vue/es/table/interface';
-import { DownOutlined, EditOutlined, SearchOutlined } from '@ant-design/icons-vue';
+import type { ColumnFilterItem } from 'ant-design-vue/es/table/interface';
+import { DownOutlined, EditOutlined } from '@ant-design/icons-vue';
 import { MessageSchema } from '@/locales/schema';
 import { useBookmarkStore } from '@/stores/bookmark';
 import { batchBookmark, getBookmarkList, importBookmarks } from '@/apis/bookmarks';
@@ -105,6 +98,7 @@ import SPrivacyForm from '@/components/SPrivacyForm.vue';
 import SWeightForm from '@/components/SWeightForm.vue';
 import SFolderForm from '@/components/SFolderForm.vue';
 import SBookmarkUrl from '@/components/SBookmarkUrl.vue';
+import SFilterDropdown from '@/components/SFilterDropdown.vue';
 
 const { t } = useI18n<{
   message: MessageSchema;
@@ -156,7 +150,7 @@ const { run: importRun, loading: importLoading } = useRequest(importBookmarks, {
   },
 });
 
-const searchInput = ref<HTMLInputElement>();
+const filterDropdown = ref<InstanceType<typeof SFilterDropdown> | null>();
 
 const form = reactive({
   privacy: false,
@@ -182,7 +176,7 @@ const columns: TableColumnType<BookmarkListItem>[] = [
     onFilterDropdownOpenChange: visible => {
       if (visible) {
         window.setTimeout(() => {
-          searchInput.value?.focus();
+          filterDropdown.value?.focus();
         }, 100);
       }
     },
@@ -197,7 +191,7 @@ const columns: TableColumnType<BookmarkListItem>[] = [
     onFilterDropdownOpenChange: visible => {
       if (visible) {
         window.setTimeout(() => {
-          searchInput.value?.focus();
+          filterDropdown.value?.focus();
         }, 100);
       }
     },
@@ -212,7 +206,7 @@ const columns: TableColumnType<BookmarkListItem>[] = [
     onFilterDropdownOpenChange: visible => {
       if (visible) {
         window.setTimeout(() => {
-          searchInput.value?.focus();
+          filterDropdown.value?.focus();
         }, 100);
       }
     },
@@ -350,16 +344,6 @@ const onTableChange: TableProps<BookmarkListItem>['onChange'] = (pag, filters, s
 
   run(bookmarkStore.params);
 };
-
-function onSearch(confirm: FilterDropdownProps<BookmarkListItem>['confirm']) {
-  confirm();
-}
-
-function onReset(clearFilters: FilterDropdownProps<FolderListItem>['clearFilters']) {
-  if (clearFilters) {
-    clearFilters({ confirm: true, closeDropdown: true });
-  }
-}
 
 function onAdd() {
   editState.value = false;

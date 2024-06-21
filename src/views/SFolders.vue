@@ -48,21 +48,14 @@
       </template>
     </template>
     <template #customFilterDropdown="{ setSelectedKeys, selectedKeys, confirm, clearFilters, column }">
-      <div style="padding: 8px">
-        <a-input
-          ref="searchInput"
-          :placeholder="t('actions.searchPlaceholder', { msg: column.title })"
-          :value="selectedKeys[0]"
-          style="width: 188px; margin-bottom: 8px; display: block"
-          @change="(e: any) => setSelectedKeys(e.target?.value ? [e.target.value] : [])"
-          @pressEnter="onSearch(confirm)"
-        ></a-input>
-        <a-button type="primary" size="small" style="width: 90px; margin-right: 8px" @click="onSearch(confirm)">
-          <template #icon><search-outlined /></template>
-          {{ t('actions.search') }}
-        </a-button>
-        <a-button size="small" style="width: 90px" @click="onReset(clearFilters)">{{ t('actions.reset') }}</a-button>
-      </div>
+      <s-filter-dropdown
+        ref="filterDropdown"
+        :title="column.title"
+        :value="selectedKeys[0]"
+        :confirm
+        :clear-filters="clearFilters"
+        @change="v => setSelectedKeys(v)"
+      ></s-filter-dropdown>
     </template>
   </a-table>
   <s-folder-modal v-model:open="modalOpen" :id="curId" :edit="editState" @changed="refresh"></s-folder-modal>
@@ -75,8 +68,7 @@ import { usePagination, useRequest } from 'vue-request';
 import { useI18n } from 'vue-i18n';
 import { Modal, message } from 'ant-design-vue';
 import type { MenuProps, TableColumnType, TableProps } from 'ant-design-vue';
-import type { FilterDropdownProps } from 'ant-design-vue/es/table/interface';
-import { DownOutlined, EditOutlined, SearchOutlined } from '@ant-design/icons-vue';
+import { DownOutlined, EditOutlined } from '@ant-design/icons-vue';
 import { MessageSchema } from '@/locales/schema';
 import { useFolderStore } from '@/stores/folder';
 import { batchFolder, getFolderList } from '@/apis/folders';
@@ -86,6 +78,7 @@ import SFolderModal from '@/components/SFolderModal.vue';
 import SLargeForm from '@/components/SLargeForm.vue';
 import SPrivacyForm from '@/components/SPrivacyForm.vue';
 import SWeightForm from '@/components/SWeightForm.vue';
+import SFilterDropdown from '@/components/SFilterDropdown.vue';
 
 const { t } = useI18n<{
   message: MessageSchema;
@@ -108,7 +101,7 @@ const { run: batchRun, loading: batchLoading } = useRequest(batchFolder, {
   },
 });
 
-const searchInput = ref<HTMLInputElement>();
+const filterDropdown = ref<InstanceType<typeof SFilterDropdown> | null>();
 
 const form = reactive({
   large: false,
@@ -127,7 +120,7 @@ const columns: TableColumnType<FolderListItem>[] = [
     onFilterDropdownOpenChange: visible => {
       if (visible) {
         window.setTimeout(() => {
-          searchInput.value?.focus();
+          filterDropdown.value?.focus();
         }, 100);
       }
     },
@@ -142,7 +135,7 @@ const columns: TableColumnType<FolderListItem>[] = [
     onFilterDropdownOpenChange: visible => {
       if (visible) {
         window.setTimeout(() => {
-          searchInput.value?.focus();
+          filterDropdown.value?.focus();
         }, 100);
       }
     },
@@ -263,16 +256,6 @@ const onTableChange: TableProps<FolderListItem>['onChange'] = (pag, filters, sor
 
   run(folderStore.params);
 };
-
-function onSearch(confirm: FilterDropdownProps<FolderListItem>['confirm']) {
-  confirm();
-}
-
-function onReset(clearFilters: FilterDropdownProps<FolderListItem>['clearFilters']) {
-  if (clearFilters) {
-    clearFilters({ confirm: true, closeDropdown: true });
-  }
-}
 
 function onAdd() {
   editState.value = false;

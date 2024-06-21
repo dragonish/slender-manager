@@ -44,6 +44,7 @@ declare module 'vue' {
     SBookmarkModal: typeof import('./src/components/SBookmarkModal.vue')['default']
     SBookmarkUrl: typeof import('./src/components/SBookmarkUrl.vue')['default']
     SBoolState: typeof import('./src/components/SBoolState.vue')['default']
+    SFilterDropdown: typeof import('./src/components/SFilterDropdown.vue')['default']
     SFolderForm: typeof import('./src/components/SFolderForm.vue')['default']
     SFolderModal: typeof import('./src/components/SFolderModal.vue')['default']
     SHeaderBreadcrumb: typeof import('./src/components/SHeaderBreadcrumb.vue')['default']
