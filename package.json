@@ -14,6 +14,7 @@
     "alpha": "pnpm run release --prerelease alpha",
     "beta": "pnpm run release --prerelease beta",
     "test": "vue-tsc && cross-env NODE_NO_WARNINGS=1 mocha",
+    "test:unit": "cross-env NODE_NO_WARNINGS=1 mocha",
     "i18n": "tsx ./tools/i18n.ts"
   },
   "dependencies": {
