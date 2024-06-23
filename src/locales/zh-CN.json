@@ -2,6 +2,7 @@
   "menus": {
     "bookmarks": "书签列表",
     "folders": "文件夹列表",
+    "searchEngines": "搜索引擎列表",
     "files": "图标列表",
     "logins": "登录日志",
     "settings": "程序设置",
@@ -14,7 +15,7 @@
     },
     "url": {
       "text": "网址",
-      "tip": "书签网址"
+      "tip": "条目网址"
     },
     "description": {
       "text": "描述",
@@ -22,7 +23,7 @@
     },
     "icon": {
       "text": "图标",
-      "tip": "书签图标"
+      "tip": "条目图标"
     },
     "privacy": {
       "text": "私密性",
@@ -55,6 +56,14 @@
     "visits": {
       "text": "访问量",
       "tip": "对书签的访问次数"
+    },
+    "method": {
+      "text": "方法",
+      "tip": "请求方法"
+    },
+    "body": {
+      "text": "数据",
+      "tip": "请求数据"
     }
   },
   "actions": {
@@ -122,6 +131,20 @@
     "exportErr": "无法导出书签！",
     "builtInIcon": "内置",
     "inputIcon": "输入"
+  },
+  "searchEngines": {
+    "modalTitle": "{msg}搜索引擎",
+    "getErr": "无法获取搜索引擎！",
+    "added": "添加搜索引擎完成",
+    "addErr": "无法添加搜索引擎!",
+    "updated": "更新搜索引擎完成",
+    "updateErr": "无法更新搜索引擎!",
+    "deleted": "删除搜索引擎完成",
+    "deleteErr": "无法删除搜索引擎!",
+    "deleteConfirm": "您确定要删除此搜索引擎？ | 您确定要删除这些搜索引擎吗？",
+    "batched": "批处理搜索引擎完成",
+    "batchErr": "无法批处理搜索引擎",
+    "placeholder": "占位符"
   },
   "files": {
     "upload": "上传",

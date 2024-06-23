@@ -29,6 +29,8 @@ declare module 'vue' {
     AMenuItem: typeof import('ant-design-vue/es')['MenuItem']
     AModal: typeof import('ant-design-vue/es')['Modal']
     APopconfirm: typeof import('ant-design-vue/es')['Popconfirm']
+    ARadio: typeof import('ant-design-vue/es')['Radio']
+    ARadioGroup: typeof import('ant-design-vue/es')['RadioGroup']
     ASegmented: typeof import('ant-design-vue/es')['Segmented']
     ASelect: typeof import('ant-design-vue/es')['Select']
     ASpace: typeof import('ant-design-vue/es')['Space']
@@ -50,6 +52,8 @@ declare module 'vue' {
     SHeaderBreadcrumb: typeof import('./src/components/SHeaderBreadcrumb.vue')['default']
     SLargeForm: typeof import('./src/components/SLargeForm.vue')['default']
     SPrivacyForm: typeof import('./src/components/SPrivacyForm.vue')['default']
+    SSearchengineModal: typeof import('./src/components/SSearchengineModal.vue')['default']
+    SSearchengineUrl: typeof import('./src/components/SSearchengineUrl.vue')['default']
     SSiderMenu: typeof import('./src/components/SSiderMenu.vue')['default']
     SWeightForm: typeof import('./src/components/SWeightForm.vue')['default']
   }

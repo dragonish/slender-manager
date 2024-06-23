@@ -24,6 +24,7 @@ setGlobalOptions({
 
 const bookmarks = () => import('@/views/SBookmarks.vue');
 const folders = () => import('@/views/SFolders.vue');
+const searchEngines = () => import('@/views/SSearchengines.vue');
 const files = () => import('@/views/SFiles.vue');
 const logins = () => import('@/views/SLogins.vue');
 const settings = () => import('@/views/SSettings.vue');
@@ -53,6 +54,11 @@ const router = createRouter({
       path: '/folders',
       name: 'folders',
       component: folders,
+    },
+    {
+      path: '/search-engines',
+      name: 'searchEngines',
+      component: searchEngines,
     },
     {
       path: '/files',

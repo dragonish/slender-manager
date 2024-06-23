@@ -14,17 +14,22 @@ interface ImportMetaEnv {
 
 type Key = string | number;
 
-type MenuKey = 'bookmarks' | 'folders' | 'files' | 'logins' | 'settings' | 'about';
+type MenuKey = 'bookmarks' | 'folders' | 'searchEngines' | 'files' | 'logins' | 'settings' | 'about';
 
 type FolderOrder = 'created-time' | 'modified-time' | 'bookmark-total' | 'weight';
 type BookmarkOrder = 'created-time' | 'modified-time' | 'visits' | 'folder-weight' | 'weight';
+type SearchEngineOrder = 'created-time' | 'modified-time' | 'weight';
 type LoginOrder = 'login-time';
 
 type FolderBatchAction = 'delete' | 'setLarge' | 'setPrivacy' | 'setWeight' | 'incWeight';
 type BookmarkBatchAction = 'delete' | 'setPrivacy' | 'setWeight' | 'incWeight' | 'clearVisits' | 'setFolder';
+type SearchEngineBatchAction = 'delete' | 'setWeight' | 'incWeight';
 
 type FolderBatchBody<T = unknown> = BatchBody<T, FolderBatchAction>;
 type BookmarkBatchBody<T = unknown> = BatchBody<T, BookmarkBatchAction>;
+type SearchEngineBatchBody<T = unknown> = BatchBody<T, SearchEngineBatchAction>;
+
+type SearchEngineMethod = 'GET' | 'POST';
 
 interface PageData {
   pageSize: number;
@@ -100,6 +105,31 @@ interface FileBaseData {
 
 interface BookmarkResData extends BookmarkBaseData {
   files: FileBaseData[];
+}
+
+interface SearchEngineBaseData {
+  id: number;
+  name: string;
+  method: SearchEngineMethod;
+  url: string;
+  body: string;
+  icon: string;
+  weight: number;
+  createdTime: string;
+  modifiedTime: string;
+}
+
+interface SearchEngineListData extends PageData {
+  list: SearchEngineBaseData[];
+}
+
+interface SearchEngineBody {
+  name: string;
+  method: SearchEngineMethod;
+  url: string;
+  body: string;
+  icon: string;
+  weight: number;
 }
 
 interface SlenderSettings {

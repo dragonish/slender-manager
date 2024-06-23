@@ -1,21 +1,41 @@
 import 'mocha';
 import { expect } from 'chai';
-import { findUrlKeys, pathMatcher } from '@/common/url';
+import { findKeys, pathMatcher } from '@/common/url';
 
 describe('Test url', function () {
-  it('findUrlKeys', function () {
-    expect(findUrlKeys('https://{hostname}:8888')).to.deep.eq([
+  it('findKeys', function () {
+    expect(findKeys('https://{hostname}:8888')).to.deep.eq([
       {
         text: 'https://',
-        isUrlKey: false,
+        highlight: false,
       },
       {
         text: '{hostname}',
-        isUrlKey: true,
+        highlight: true,
       },
       {
         text: ':8888',
-        isUrlKey: false,
+        highlight: false,
+      },
+    ]);
+    expect(findKeys('https://example.com/?w=%s&code=1')).to.deep.eq([
+      {
+        text: 'https://example.com/?w=%s&code=1',
+        highlight: false,
+      },
+    ]);
+    expect(findKeys('https://example.com/?w=%s&code=1', true)).to.deep.eq([
+      {
+        text: 'https://example.com/?w=',
+        highlight: false,
+      },
+      {
+        text: '%s',
+        highlight: true,
+      },
+      {
+        text: '&code=1',
+        highlight: false,
       },
     ]);
   });

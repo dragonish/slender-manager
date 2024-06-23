@@ -1,25 +1,25 @@
 <template>
   <span class="slender-bookmark-url">
-    <template v-for="({ isUrlKey, text }, index) in textList" :key="index">
-      <span :class="{ 'slender-bookmark-dynamic-text': isUrlKey }" :title="textTitle(isUrlKey, text)">{{ text }}</span>
+    <template v-for="({ highlight, text }, index) in textList" :key="index">
+      <span :class="{ 'slender-bookmark-dynamic-text': highlight }" :title="textTitle(highlight, text)">{{ text }}</span>
     </template>
   </span>
 </template>
 
 <script setup lang="ts">
 import { computed } from 'vue';
-import { getLocation, findUrlKeys } from '@/common/url';
+import { getLocation, findKeys } from '@/common/url';
 
 const props = defineProps<{
   url: string;
 }>();
 
 const textList = computed(() => {
-  return findUrlKeys(props.url);
+  return findKeys(props.url);
 });
 
-function textTitle(isUrlKey: boolean, text: string) {
-  if (isUrlKey) {
+function textTitle(highlight: boolean, text: string) {
+  if (highlight) {
     const key = text.slice(1, -1) as keyof Location;
     return getLocation(key);
   }

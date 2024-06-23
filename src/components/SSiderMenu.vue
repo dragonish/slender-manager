@@ -36,6 +36,7 @@ import {
   InboxOutlined,
   InfoCircleOutlined,
   OrderedListOutlined,
+  SearchOutlined,
   SettingOutlined,
   UserOutlined,
 } from '@ant-design/icons-vue';
@@ -69,6 +70,12 @@ const menuList: MenuItem[] = [
     icon: FolderOutlined,
     text: t('menus.folders'),
     path: '/folders',
+  },
+  {
+    key: 'searchEngines',
+    icon: SearchOutlined,
+    text: t('menus.searchEngines'),
+    path: '/search-engines',
   },
   {
     key: 'files',
@@ -114,6 +121,8 @@ function routeToMenuKey(path: string) {
     selectedKeys.value = ['bookmarks'];
   } else if (pathMatcher(path, '/folders')) {
     selectedKeys.value = ['folders'];
+  } else if (pathMatcher(path, '/search-engines')) {
+    selectedKeys.value = ['searchEngines'];
   } else if (pathMatcher(path, '/files')) {
     selectedKeys.value = ['files'];
   } else if (pathMatcher(path, '/logins')) {

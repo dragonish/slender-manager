@@ -28,6 +28,10 @@ const routes: Record<MenuKey, Route> = {
     path: '/folders',
     breadcrumbName: t('menus.folders'),
   },
+  searchEngines: {
+    path: '/search-engines',
+    breadcrumbName: t('menus.searchEngines'),
+  },
   files: {
     path: '/files',
     breadcrumbName: t('menus.files'),
