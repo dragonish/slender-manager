@@ -40,7 +40,6 @@
     "@typescript-eslint/eslint-plugin": "^7.13.1",
     "@typescript-eslint/parser": "^7.13.1",
     "@vitejs/plugin-vue": "^5.0.5",
-    "@volar/typescript": "2.3.1",
     "chai": "^5.1.1",
     "cross-env": "^7.0.3",
     "dotenv": "^16.4.5",
@@ -57,6 +56,12 @@
     "vite": "^5.3.1",
     "vite-plugin-zip-pack": "^1.2.3",
     "vue-tsc": "^2.0.22"
+  },
+  "pnpm": {
+    "overrides": {
+      "@volar/typescript": "2.3.1",
+      "@volar/language-core": "2.3.1"
+    }
   },
   "standard-version": {
     "skip": {
