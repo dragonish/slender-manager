@@ -181,17 +181,17 @@ const columns: TableColumnType<SearchEngineBaseData>[] = [
     defaultSortOrder: searchEngineStore.params.order === 'weight' ? 'descend' : undefined,
   },
   {
-    key: 'created-time',
-    dataIndex: 'createdTime',
-    title: t('data.createdTime.text'),
-  },
-  {
     key: 'modified-time',
     dataIndex: 'modifiedTime',
     title: t('data.modifiedTime.text'),
     sorter: true,
     sortDirections: ['descend'],
     defaultSortOrder: searchEngineStore.params.order === 'modified-time' ? 'descend' : undefined,
+  },
+  {
+    key: 'created-time',
+    dataIndex: 'createdTime',
+    title: t('data.createdTime.text'),
   },
   {
     key: 'action',

@@ -177,20 +177,20 @@ const columns: TableColumnType<FolderListItem>[] = [
     defaultSortOrder: folderStore.params.order === 'bookmark-total' ? 'descend' : undefined,
   },
   {
-    key: 'created-time',
-    dataIndex: 'createdTime',
-    title: t('data.createdTime.text'),
-    sorter: true,
-    sortDirections: ['descend'],
-    defaultSortOrder: folderStore.params.order === 'created-time' ? 'descend' : undefined,
-  },
-  {
     key: 'modified-time',
     dataIndex: 'modifiedTime',
     title: t('data.modifiedTime.text'),
     sorter: true,
     sortDirections: ['descend'],
     defaultSortOrder: folderStore.params.order === 'modified-time' ? 'descend' : undefined,
+  },
+  {
+    key: 'created-time',
+    dataIndex: 'createdTime',
+    title: t('data.createdTime.text'),
+    sorter: true,
+    sortDirections: ['descend'],
+    defaultSortOrder: folderStore.params.order === 'created-time' ? 'descend' : undefined,
   },
   {
     key: 'action',

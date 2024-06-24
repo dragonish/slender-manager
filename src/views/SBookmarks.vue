@@ -256,17 +256,17 @@ const columns: TableColumnType<BookmarkListItem>[] = [
     defaultSortOrder: bookmarkStore.params.order === 'visits' ? 'descend' : undefined,
   },
   {
-    key: 'created-time',
-    dataIndex: 'createdTime',
-    title: t('data.createdTime.text'),
-  },
-  {
     key: 'modified-time',
     dataIndex: 'modifiedTime',
     title: t('data.modifiedTime.text'),
     sorter: true,
     sortDirections: ['descend'],
     defaultSortOrder: bookmarkStore.params.order === 'modified-time' ? 'descend' : undefined,
+  },
+  {
+    key: 'created-time',
+    dataIndex: 'createdTime',
+    title: t('data.createdTime.text'),
   },
   {
     key: 'action',
