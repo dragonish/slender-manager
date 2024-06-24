@@ -407,7 +407,7 @@ async function onOK() {
       break;
   }
 
-  const files = fileList.value.map(item => item.response?.data.id).filter((v): v is number => v != undefined);
+  const files = fileList.value.map(item => item.response?.data.id).filter(v => v != undefined);
   if (props.edit) {
     // edit
     updateRun(id, {
