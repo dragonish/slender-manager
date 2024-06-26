@@ -65,7 +65,6 @@ if (!productionMode) {
 }
 
 const now = new Date();
-const gmtOffset = now.getTimezoneOffset() / -60;
 
 // https://vitejs.dev/config/
 export default defineConfig({
@@ -86,9 +85,7 @@ export default defineConfig({
     'import.meta.env.GO_DEV': goDev,
     'import.meta.env.VERSION': JSON.stringify(packageJson.version),
     'import.meta.env.DATE': JSON.stringify(
-      `${now.getFullYear()}-${(now.getMonth() + 1).toString().padStart(2, '0')}-${now.getDate().toString().padStart(2, '0')}T${now.toLocaleTimeString()}${
-        gmtOffset >= 0 ? '+' : '-'
-      }${(gmtOffset * 100).toString().padStart(4, '0')}`
+      `${now.getFullYear()}-${(now.getMonth() + 1).toString().padStart(2, '0')}-${now.getDate().toString().padStart(2, '0')}T${now.toTimeString()}`
     ),
     'import.meta.env.DEV_ADMIN_PWD': JSON.stringify(envDevAdminPwd),
     'import.meta.env.PRO_ADMIN_PWD': JSON.stringify(envProAdminPwd),
