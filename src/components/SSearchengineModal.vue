@@ -219,6 +219,7 @@ watch(
       iconSelected.value = 'builtIn';
       iconForm.builtIn = '';
       iconForm.input = '';
+      icon.value = '';
 
       getIconsRun();
 
