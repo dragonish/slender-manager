@@ -11,7 +11,7 @@
         <a-textarea v-model:value="settings.customFooter" auto-size @change="onChange('content')"></a-textarea>
       </a-flex>
       <div>
-        <a-button type="primary" :disabled="!status.content" @click="onChange('content')">{{ t('actions.save') }}</a-button>
+        <a-button type="primary" :disabled="!status.content" @click="onSave('content')">{{ t('actions.save') }}</a-button>
       </div>
     </a-flex>
     <a-divider orientation="left">{{ t('settings.elementSetting') }}</a-divider>
