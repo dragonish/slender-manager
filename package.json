@@ -26,7 +26,7 @@
     "dayjs": "^1.11.11",
     "file-saver": "^2.0.5",
     "pinia": "^2.1.7",
-    "vue": "^3.4.30",
+    "vue": "^3.4.31",
     "vue-i18n": "^9.13.1",
     "vue-request": "^2.0.4",
     "vue-router": "^4.4.0"
@@ -48,20 +48,14 @@
     "less": "^4.2.0",
     "less-loader": "^12.2.0",
     "lodash-es": "^4.17.21",
-    "mocha": "^10.5.1",
+    "mocha": "^10.5.2",
     "standard-version": "^9.5.0",
-    "tsx": "^4.15.7",
+    "tsx": "^4.16.0",
     "typescript": "^5.5.2",
-    "unplugin-vue-components": "^0.27.1",
-    "vite": "^5.3.1",
+    "unplugin-vue-components": "^0.27.2",
+    "vite": "^5.3.2",
     "vite-plugin-zip-pack": "^1.2.3",
-    "vue-tsc": "^2.0.22"
-  },
-  "pnpm": {
-    "overrides": {
-      "@volar/typescript": "2.3.1",
-      "@volar/language-core": "2.3.1"
-    }
+    "vue-tsc": "^2.0.24"
   },
   "standard-version": {
     "skip": {
