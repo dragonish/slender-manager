@@ -1,6 +1,10 @@
 <template>
   <a-breadcrumb class="slender-breadcrumb">
-    <a-breadcrumb-item><home-outlined class="slender-breadcrumb-item"></home-outlined></a-breadcrumb-item>
+    <a-breadcrumb-item>
+      <a-button type="link" href="/">
+        <home-outlined class="slender-breadcrumb-item"></home-outlined>
+      </a-button>
+    </a-breadcrumb-item>
     <a-breadcrumb-item class="slender-breadcrumb-item">{{ cur }}</a-breadcrumb-item>
   </a-breadcrumb>
 </template>
