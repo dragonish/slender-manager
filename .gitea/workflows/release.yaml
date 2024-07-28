@@ -54,10 +54,10 @@ jobs:
           token: ${{ secrets.GITHUB_TOKEN }}
           name: Release ${{ steps.git_tags.outputs.current }}
           body: |
-          ${{ steps.changelog_text.outputs.changes }}
+            ${{ steps.changelog_text.outputs.changes }}
 
-          ---
+            ---
 
-          ## Details
+            ## Details
 
-          See: [${{ steps.git_tags.outputs.prev }}...${{ steps.git_tags.outputs.current }}](/${{ gitea.repository }}/compare/${{ steps.git_tags.outputs.prev }}...${{ steps.git_tags.outputs.current }})
+            See: [${{ steps.git_tags.outputs.prev }}...${{ steps.git_tags.outputs.current }}](/${{ gitea.repository }}/compare/${{ steps.git_tags.outputs.prev }}...${{ steps.git_tags.outputs.current }})
