@@ -43,18 +43,5 @@ declare module 'vue' {
     AUpload: typeof import('ant-design-vue/es')['Upload']
     RouterLink: typeof import('vue-router')['RouterLink']
     RouterView: typeof import('vue-router')['RouterView']
-    SBookmarkModal: typeof import('./src/components/SBookmarkModal.vue')['default']
-    SBookmarkUrl: typeof import('./src/components/SBookmarkUrl.vue')['default']
-    SBoolState: typeof import('./src/components/SBoolState.vue')['default']
-    SFilterDropdown: typeof import('./src/components/SFilterDropdown.vue')['default']
-    SFolderForm: typeof import('./src/components/SFolderForm.vue')['default']
-    SFolderModal: typeof import('./src/components/SFolderModal.vue')['default']
-    SHeaderBreadcrumb: typeof import('./src/components/SHeaderBreadcrumb.vue')['default']
-    SLargeForm: typeof import('./src/components/SLargeForm.vue')['default']
-    SPrivacyForm: typeof import('./src/components/SPrivacyForm.vue')['default']
-    SSearchengineModal: typeof import('./src/components/SSearchengineModal.vue')['default']
-    SSearchengineUrl: typeof import('./src/components/SSearchengineUrl.vue')['default']
-    SSiderMenu: typeof import('./src/components/SSiderMenu.vue')['default']
-    SWeightForm: typeof import('./src/components/SWeightForm.vue')['default']
   }
 }

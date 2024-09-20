@@ -33,6 +33,7 @@ const plugins: PluginOption[] = [
         names: ['RouterLink', 'RouterView'],
       },
     ],
+    excludeNames: [/^S.+/],
   }),
 ];
 
