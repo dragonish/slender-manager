@@ -2,27 +2,27 @@
   <a-descriptions :column="1" size="small" bordered :title="t('menus.about')" class="slender-about-descriptions">
     <a-descriptions-item :label="t('about.appVersion')">{{ info.version + '-' + info.commit }}</a-descriptions-item>
     <a-descriptions-item :label="t('about.appBuildDate')">{{ info.buildDate }}</a-descriptions-item>
-    <a-descriptions-item :label="t('about.appLink')">
-      <a href="https://github.com/dragonish/slender-go" target="_blank" rel="noopener">dragonish/slender-go</a>
-    </a-descriptions-item>
 
     <a-descriptions-item :label="t('about.managerVersion')">{{ jsVersion }}</a-descriptions-item>
     <a-descriptions-item :label="t('about.managerBuildDate')">{{ jsDate }}</a-descriptions-item>
+
+    <a-descriptions-item :label="t('about.mdiVersion')">{{ info.mdiVersion }}</a-descriptions-item>
+    <a-descriptions-item :label="t('about.siVersion')">{{ info.siVersion }}</a-descriptions-item>
+
+    <a-descriptions-item :label="t('about.arch')">{{ info.os + '/' + info.arch }}</a-descriptions-item>
+
+    <a-descriptions-item :label="t('about.appLink')">
+      <a href="https://github.com/dragonish/slender-go" target="_blank" rel="noopener">dragonish/slender-go</a>
+    </a-descriptions-item>
     <a-descriptions-item :label="t('about.managerLink')">
       <a href="https://github.com/dragonish/slender-manager" target="_blank" rel="noopener">dragonish/slender-manager</a>
     </a-descriptions-item>
-
-    <a-descriptions-item :label="t('about.mdiVersion')">{{ info.mdiVersion }}</a-descriptions-item>
     <a-descriptions-item :label="t('about.mdiLink')">
       <a href="https://github.com/Templarian/MaterialDesign" target="_blank" rel="noopener">Templarian/MaterialDesign</a>
     </a-descriptions-item>
-
-    <a-descriptions-item :label="t('about.siVersion')">{{ info.siVersion }}</a-descriptions-item>
     <a-descriptions-item :label="t('about.siLink')">
       <a href="https://github.com/simple-icons/simple-icons" target="_blank" rel="noopener">simple-icons/simple-icons</a>
     </a-descriptions-item>
-
-    <a-descriptions-item :label="t('about.arch')">{{ info.os + '/' + info.arch }}</a-descriptions-item>
   </a-descriptions>
 </template>
 
