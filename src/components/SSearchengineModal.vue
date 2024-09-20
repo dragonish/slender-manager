@@ -48,7 +48,12 @@
             :options="iconsOptions"
             :filter-option="builtInFilterOption"
             @select="onBuiltInSelect"
-          ></a-select>
+          >
+            <template #option="{ value, label }">
+              <a-avatar v-if="value" shape="square" :size="18" style="background-color: #dfdfdf" :src="getBuiltInIcon(value)"></a-avatar>
+              <span style="margin-left: 5px">{{ label }}</span>
+            </template>
+          </a-select>
           <a-input v-else v-model:value="iconForm.input" :placeholder="t('bookmarks.iconInputPlaceholder')" @change="onIconInputChange"></a-input>
         </div>
       </a-form-item>
