@@ -205,13 +205,13 @@
     "managerVersion": "管理器版本",
     "managerBuildDate": "管理器构建日期",
     "arch": "系统架构",
-    "appLink": "程序链接",
-    "managerLink": "管理器链接",
+    "appLink": "程序项目链接",
+    "managerLink": "管理器项目链接",
     "official": "正式构建",
     "dev": "开发构建",
     "mdiVersion": "Material Design 版本",
-    "mdiLink": "Material Design 链接",
+    "mdiLink": "Material Design 项目链接",
     "siVersion": "Simple Icons 版本",
-    "siLink": "Simple Icons 链接"
+    "siLink": "Simple Icons 项目链接"
   }
 }

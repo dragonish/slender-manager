@@ -205,13 +205,13 @@
     "managerVersion": "Manager version",
     "managerBuildDate": "Manager build date",
     "arch": "System architecture",
-    "appLink": "Program link",
-    "managerLink": "Manager link",
+    "appLink": "Program project link",
+    "managerLink": "Manager project link",
     "official": "official build",
     "dev": "dev build",
     "mdiVersion": "Material Design version",
-    "mdiLink": "Material Design link",
+    "mdiLink": "Material Design project link",
     "siVersion": "Simple Icons version",
-    "siLink": "Simple Icons link"
+    "siLink": "Simple Icons project link"
   }
 }
