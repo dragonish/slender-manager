@@ -8,7 +8,7 @@
       </a-flex>
       <a-flex wrap="wrap">
         <span>{{ t('settings.customFooter') }}:</span>
-        <a-textarea v-model:value="settings.customFooter" auto-size @change="onChange('content')"></a-textarea>
+        <a-textarea v-model:value="settings.customFooter" :auto-size="{ minRows: 2, maxRows: 15 }" @change="onChange('content')"></a-textarea>
       </a-flex>
       <div>
         <a-button type="primary" :disabled="!status.content" @click="onSave('content')">{{ t('actions.save') }}</a-button>
