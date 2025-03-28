@@ -216,16 +216,18 @@ const { run: getInfoRun, loading: getLoading } = useRequest(getBookmark, {
         }
       }
 
-      files.forEach(file => {
-        fileList.value.push({
-          name: file.path,
-          uid: file.id.toString(),
-          thumbUrl: file.path,
-          response: {
-            data: file,
-          },
+      if (props.edit) {
+        files.forEach(file => {
+          fileList.value.push({
+            name: file.path,
+            uid: file.id.toString(),
+            thumbUrl: file.path,
+            response: {
+              data: file,
+            },
+          });
         });
-      });
+      }
     } else {
       message.error(t('bookmarks.getErr'));
     }
@@ -330,7 +332,7 @@ watch(
       getFolderRun();
       getIconsRun();
 
-      if (props.edit) {
+      if (props.id > 0) {
         // read data
         getInfoRun(props.id);
       }

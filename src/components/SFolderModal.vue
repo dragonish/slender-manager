@@ -132,7 +132,7 @@ watch(
       formRef.value?.resetFields();
       Object.assign<FolderBaseData, FolderBaseData>(form, generateForm());
 
-      if (props.edit) {
+      if (props.id > 0) {
         // read data
         getRun(props.id);
       }

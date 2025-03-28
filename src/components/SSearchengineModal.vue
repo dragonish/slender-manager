@@ -228,7 +228,7 @@ watch(
 
       getIconsRun();
 
-      if (props.edit) {
+      if (props.id > 0) {
         // read data
         getInfoRun(props.id);
       }

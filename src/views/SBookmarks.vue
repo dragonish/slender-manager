@@ -58,9 +58,14 @@
         <s-bool-state :state="record[column.key]"></s-bool-state>
       </template>
       <template v-else-if="column.key === 'action'">
-        <a-button type="text" shape="circle" size="small" :title="t('actions.edit')" @click="onEdit(record.id)">
-          <edit-outlined></edit-outlined>
-        </a-button>
+        <a-space>
+          <a-button type="text" shape="circle" size="small" :title="t('actions.copy')" @click="onCopy(record.id)">
+            <copy-outlined></copy-outlined>
+          </a-button>
+          <a-button type="text" shape="circle" size="small" :title="t('actions.edit')" @click="onEdit(record.id)">
+            <edit-outlined></edit-outlined>
+          </a-button>
+        </a-space>
       </template>
     </template>
     <template #customFilterDropdown="{ setSelectedKeys, selectedKeys, confirm, clearFilters, column }">
@@ -85,7 +90,7 @@ import { useI18n } from 'vue-i18n';
 import { Modal, message } from 'ant-design-vue';
 import type { MenuProps, TableColumnType, TableProps } from 'ant-design-vue';
 import type { ColumnFilterItem } from 'ant-design-vue/es/table/interface';
-import { DownOutlined, EditOutlined } from '@ant-design/icons-vue';
+import { DownOutlined, EditOutlined, CopyOutlined } from '@ant-design/icons-vue';
 import { MessageSchema } from '@/locales/schema';
 import { useBookmarkStore } from '@/stores/bookmark';
 import { batchBookmark, getBookmarkList, importBookmarks } from '@/apis/bookmarks';
@@ -377,6 +382,12 @@ function onAdd() {
 
 function onEdit(id: number) {
   editState.value = true;
+  curId.value = id;
+  modalOpen.value = true;
+}
+
+function onCopy(id: number) {
+  editState.value = false;
   curId.value = id;
   modalOpen.value = true;
 }

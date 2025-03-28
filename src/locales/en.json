@@ -91,7 +91,8 @@
     "setWeight": "Set Weight",
     "incWeight": "Inc Weight",
     "download": "Download",
-    "clean": "Clean"
+    "clean": "Clean",
+    "copy": "Copy"
   },
   "folders": {
     "bookmarkTotal": "Bookmark Total",
