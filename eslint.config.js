@@ -11,5 +11,6 @@ export default defineConfig([
   tseslint.configs.recommended,
   pluginVue.configs['flat/essential'],
   { files: ['**/*.vue'], languageOptions: { parserOptions: { parser: tseslint.parser } } },
+  { files: ['**/*.ts'], rules: { '@typescript-eslint/no-unused-expressions': 'off' } },
   { files: ['**/*.vue'], rules: { 'no-undef': 'off' } },
 ]);
