@@ -57,7 +57,7 @@
         <s-bool-state :state="record[column.key]"></s-bool-state>
       </template>
       <template v-else-if="column.key === 'action'">
-        <a-button shape="circle" size="small" :title="t('actions.edit')" @click="onEdit(record.id)">
+        <a-button type="text" shape="circle" size="small" :title="t('actions.edit')" @click="onEdit(record.id)">
           <edit-outlined></edit-outlined>
         </a-button>
       </template>

@@ -31,7 +31,7 @@
       </template>
       <template v-else-if="column.key === 'action'">
         <a-space>
-          <a-button shape="circle" size="small" :title="t('actions.download')" @click="onDownload(record.path)">
+          <a-button type="text" shape="circle" size="small" :title="t('actions.download')" @click="onDownload(record.path)">
             <download-outlined></download-outlined>
           </a-button>
           <a-popconfirm
@@ -41,7 +41,7 @@
             :cancel-text="t('actions.cancel')"
             @confirm="onDeleteFile(record.id, record.path)"
           >
-            <a-button danger shape="circle" size="small" :title="t('actions.delete')">
+            <a-button type="text" danger shape="circle" size="small" :title="t('actions.delete')">
               <delete-outlined></delete-outlined>
             </a-button>
           </a-popconfirm>
