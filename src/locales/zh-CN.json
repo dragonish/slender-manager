@@ -85,8 +85,8 @@
     "editWeight": "编辑权重",
     "setWeight": "设置权重",
     "incWeight": "增减权重",
-    "logout": "退出",
-    "download": "下载"
+    "download": "下载",
+    "clean": "清理"
   },
   "folders": {
     "bookmarkTotal": "书签数量",
@@ -167,13 +167,20 @@
     "identity": "身份",
     "admin": "管理员",
     "user": "用户",
-    "clearConfirm": "你确定要清除登录日志吗？",
-    "cleared": "已清除登录日志",
-    "clearErr": "无法清除登录日志！",
+    "cleanConfirm": "你确定要清理过期的登录日志吗？",
+    "cleaned": "已清理过期的登录日志",
+    "cleanErr": "无法清理过期的登录日志！",
     "logout": "退出",
     "logoutAll": "注销全部",
     "logoutAllConfirm": "您确定要注销所有用户吗？",
-    "logoutAllErr": "无法注销所有用户！"
+    "logoutAllErr": "无法注销所有用户！",
+    "expirationTime": "到期时间",
+    "active": "状态",
+    "activeYes": "活动中",
+    "activeNo": "已退出",
+    "activeNull": "无效的",
+    "logoutErr": "无法退出此用户！",
+    "getIdErr": "无法获取当前 ID！"
   },
   "validator": {
     "required": "{msg}是必需的！",

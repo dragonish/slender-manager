@@ -167,6 +167,8 @@ interface LoginBaseData {
   ip: string;
   ua: string;
   isAdmin: boolean;
+  maxAge: number;
+  active: boolean | null;
 }
 
 interface LoginListData extends PageData {

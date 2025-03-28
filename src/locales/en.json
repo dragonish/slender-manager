@@ -85,8 +85,8 @@
     "editWeight": "Edit Weight",
     "setWeight": "Set Weight",
     "incWeight": "Inc Weight",
-    "logout": "Logout",
-    "download": "Download"
+    "download": "Download",
+    "clean": "Clean"
   },
   "folders": {
     "bookmarkTotal": "Bookmark Total",
@@ -167,13 +167,20 @@
     "identity": "Identity",
     "admin": "Admin",
     "user": "User",
-    "clearConfirm": "Are you sure you want to clear login log?",
-    "cleared": "Login log cleared",
-    "clearErr": "Unable to clear login log!",
+    "cleanConfirm": "Are you sure you want to clean expired login log?",
+    "cleaned": "Expired login log cleaned",
+    "cleanErr": "Unable to clean expired login log!",
     "logout": "Logout",
     "logoutAll": "Logout All",
     "logoutAllConfirm": "Are you sure you want to logout all users?",
-    "logoutAllErr": "Unable to logout all users!"
+    "logoutAllErr": "Unable to logout all users!",
+    "expirationTime": "Expiration Time",
+    "active": "Active",
+    "activeYes": "Login",
+    "activeNo": "Logout",
+    "activeNull": "N/A",
+    "logoutErr": "Unable to logout user!",
+    "getIdErr": "Failed to get current id!"
   },
   "validator": {
     "required": "{msg} is required!",

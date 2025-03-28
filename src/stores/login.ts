@@ -12,6 +12,7 @@ export const useLoginStore = defineStore('login', {
       size: 20,
       order: 'login-time',
       admin: null,
+      active: null,
     },
   }),
 });

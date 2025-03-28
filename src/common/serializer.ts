@@ -1,3 +1,8 @@
+import dayjs from 'dayjs';
+import CustomParseFormat from 'dayjs/plugin/CustomParseFormat';
+
+dayjs.extend(CustomParseFormat);
+
 /**
  * Converts a route param to a string value.
  * @param inputValue input value
@@ -91,4 +96,15 @@ export function getBuiltInIcon(name: string): string {
   }
 
   return '';
+}
+
+export function getExpirationTime(startingTime: string, maxAge: number): string {
+  const time = dayjs(startingTime, 'YYYY-MM-DD HH:mm:ss').add(maxAge, 'days');
+  return time.format('YYYY-MM-DD HH:mm:ss');
+}
+
+export function isExpired(time: string): boolean {
+  const now = dayjs();
+  const then = dayjs(time, 'YYYY-MM-DD HH:mm:ss');
+  return then.isBefore(now);
 }

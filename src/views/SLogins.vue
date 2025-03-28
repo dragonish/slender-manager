@@ -7,7 +7,7 @@
     :locale
     :columns
     :pagination
-    :loading="loading || clearLoading || logoutLoading"
+    :loading="loading || getIdLoading || cleanLoading || logoutAllLoading || logoutUserLoading"
     :scroll="{ x: true }"
     @change="onTableChange"
   >
@@ -16,8 +16,8 @@
         <template #split>
           <a-divider type="vertical" />
         </template>
-        <a-popconfirm placement="bottomLeft" :title="t('logins.clearConfirm')" :ok-text="t('actions.ok')" :cancel-text="t('actions.cancel')" @confirm="onClear">
-          <a-button type="primary" danger size="small">{{ t('actions.clear') }}</a-button>
+        <a-popconfirm placement="bottomLeft" :title="t('logins.cleanConfirm')" :ok-text="t('actions.ok')" :cancel-text="t('actions.cancel')" @confirm="onClean">
+          <a-button type="primary" danger size="small">{{ t('actions.clean') }}</a-button>
         </a-popconfirm>
         <a-popconfirm
           placement="bottomLeft"
@@ -33,6 +33,26 @@
     <template #bodyCell="{ column, record }">
       <template v-if="column.key === 'admin'">
         {{ record.isAdmin ? t('logins.admin') : t('logins.user') }}
+      </template>
+      <template v-else-if="column.key === 'active'">
+        {{ record.active == null ? t('logins.activeNull') : record.active ? t('logins.activeYes') : t('logins.activeNo') }}
+      </template>
+      <template v-else-if="column.key === 'expirationTime'">
+        <template v-if="record.active">
+          <s-expiration-time :start="record.loginTime" :max-age="record.maxAge"></s-expiration-time>
+        </template>
+        <template v-else>-</template>
+      </template>
+      <template v-else-if="column.key === 'action'">
+        <s-logout-button
+          v-if="record.loginId !== currentId"
+          :id="record.loginId"
+          :active="record.active"
+          :login-time="record.loginTime"
+          :max-age="record.maxAge"
+          :title="t('logins.logout')"
+          @logout="onLogout"
+        ></s-logout-button>
       </template>
     </template>
     <template #customFilterDropdown="{ setSelectedKeys, selectedKeys, confirm, clearFilters, column }">
@@ -65,7 +85,9 @@ import type { FilterDropdownProps } from 'ant-design-vue/es/table/interface';
 import { SearchOutlined } from '@ant-design/icons-vue';
 import { MessageSchema } from '@/locales/schema';
 import { useLoginStore } from '@/stores/login';
-import { getLoginList, clearLoginLog, logoutAllUsers } from '@/apis/logins';
+import { getLoginList, cleanLoginLog, logoutAllUsers, logoutUser, getCurrentId } from '@/apis/logins';
+import SExpirationTime from '@/components/SExpirationTime.vue';
+import SLogoutButton from '@/components/SLogoutButton.vue';
 
 const { t } = useI18n<{
   message: MessageSchema;
@@ -73,25 +95,45 @@ const { t } = useI18n<{
   useScope: 'global',
 });
 
+const currentId = ref('');
+
 const loginStore = useLoginStore();
 
 const { data, run, refresh, current, total, pageSize, loading } = usePagination(getLoginList);
-const { run: clearRun, loading: clearLoading } = useRequest(clearLoginLog, {
+const { run: getIdRun, loading: getIdLoading } = useRequest(getCurrentId, {
+  onSuccess: data => {
+    if (data[1]) {
+      currentId.value = data[1];
+    } else {
+      message.error(t('logins.getIdErr'));
+    }
+  },
+});
+const { run: cleanRun, loading: cleanLoading } = useRequest(cleanLoginLog, {
   onSuccess: data => {
     if (data[0]) {
-      message.error(t('logins.clearErr'));
+      message.error(t('logins.cleanErr'));
     } else {
-      message.success(t('logins.cleared'));
+      message.success(t('logins.cleaned'));
       refresh();
     }
   },
 });
-const { run: logoutRun, loading: logoutLoading } = useRequest(logoutAllUsers, {
+const { run: logoutAllRun, loading: logoutAllLoading } = useRequest(logoutAllUsers, {
   onSuccess: data => {
     if (data[0]) {
       message.error(t('logins.logoutAllErr'));
     } else {
       window.location.reload();
+    }
+  },
+});
+const { run: logoutUserRun, loading: logoutUserLoading } = useRequest(logoutUser, {
+  onSuccess: data => {
+    if (data[0]) {
+      message.error(t('logins.logoutErr'));
+    } else {
+      refresh();
     }
   },
 });
@@ -150,6 +192,30 @@ const columns: TableColumnType<LoginBaseData>[] = [
     key: 'loginTime',
     dataIndex: 'loginTime',
     title: t('logins.loginTime'),
+    align: 'center',
+  },
+  {
+    key: 'expirationTime',
+    title: t('logins.expirationTime'),
+    align: 'center',
+  },
+  {
+    key: 'active',
+    dataIndex: 'active',
+    title: t('logins.active'),
+    align: 'center',
+    filters: [
+      { text: t('logins.activeYes'), value: true },
+      { text: t('logins.activeNo'), value: false },
+    ],
+    filterMultiple: false,
+    defaultFilteredValue: loginStore.params.active == null ? undefined : [loginStore.params.active.toString()],
+  },
+  {
+    key: 'action',
+    title: t('actions.action'),
+    width: 80,
+    align: 'center',
   },
 ];
 
@@ -168,6 +234,7 @@ const pagination = computed(() => ({
 }));
 
 onBeforeMount(() => {
+  getIdRun();
   run(loginStore.params);
 });
 
@@ -178,6 +245,12 @@ const onTableChange: TableProps<FolderListItem>['onChange'] = (pag, filters) => 
     loginStore.params.admin = null;
   } else {
     loginStore.params.admin = !!filters.admin[0];
+  }
+
+  if (filters.active == null) {
+    loginStore.params.active = null;
+  } else {
+    loginStore.params.active = !!filters.active[0];
   }
 
   if (pag.current) {
@@ -200,11 +273,15 @@ function onReset(clearFilters: FilterDropdownProps<FolderListItem>['clearFilters
   }
 }
 
-function onClear() {
-  clearRun();
+function onClean() {
+  cleanRun();
 }
 
 function onLogoutAll() {
-  logoutRun();
+  logoutAllRun();
+}
+
+function onLogout(id: string) {
+  logoutUserRun(id);
 }
 </script>
