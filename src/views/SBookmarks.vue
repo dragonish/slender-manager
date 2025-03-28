@@ -24,6 +24,7 @@
               <a-menu-item key="delete">{{ t('actions.delete') }}</a-menu-item>
               <a-menu-item key="clearVisits">{{ t('bookmarks.clearVisits') }}</a-menu-item>
               <a-menu-item key="setPrivacy">{{ t('actions.setPrivacy') }}</a-menu-item>
+              <a-menu-item key="setHideInOther">{{ t('actions.setHideInOther') }}</a-menu-item>
               <a-menu-item key="setFolder">{{ t('bookmarks.setFolder') }}</a-menu-item>
               <a-menu-item key="export">{{ t('bookmarks.export') }}</a-menu-item>
               <a-sub-menu key="editWeight" :title="t('actions.editWeight')">
@@ -53,7 +54,7 @@
           :src="getBuiltInIcon(record[column.key]) || record[column.key]"
         ></a-avatar>
       </template>
-      <template v-else-if="column.key === 'privacy'">
+      <template v-else-if="column.key === 'privacy' || column.key === 'hideInOther'">
         <s-bool-state :state="record[column.key]"></s-bool-state>
       </template>
       <template v-else-if="column.key === 'action'">
@@ -95,6 +96,7 @@ import { customFilterIcon } from '@/common/ui';
 import SBoolState from '@/components/SBoolState.vue';
 import SBookmarkModal from '@/components/SBookmarkModal.vue';
 import SPrivacyForm from '@/components/SPrivacyForm.vue';
+import SHideForm from '@/components/SHideForm.vue';
 import SWeightForm from '@/components/SWeightForm.vue';
 import SFolderForm from '@/components/SFolderForm.vue';
 import SBookmarkUrl from '@/components/SBookmarkUrl.vue';
@@ -154,6 +156,7 @@ const filterDropdown = ref<InstanceType<typeof SFilterDropdown> | null>();
 
 const form = reactive({
   privacy: false,
+  hideInOther: false,
   weight: 0,
   folder: 0,
 });
@@ -225,6 +228,19 @@ const columns: TableColumnType<BookmarkListItem>[] = [
     ],
     filterMultiple: false,
     defaultFilteredValue: bookmarkStore.params.privacy == null ? undefined : [bookmarkStore.params.privacy.toString()],
+  },
+  {
+    key: 'hideInOther',
+    dataIndex: 'hideInOther',
+    title: t('data.hideInOther.text'),
+    align: 'center',
+    width: 100,
+    filters: [
+      { text: t('actions.yes'), value: true },
+      { text: t('actions.no'), value: false },
+    ],
+    filterMultiple: false,
+    defaultFilteredValue: bookmarkStore.params.hideInOther == null ? undefined : [bookmarkStore.params.hideInOther.toString()],
   },
   {
     key: 'folder-weight',
@@ -307,11 +323,19 @@ const onTableChange: TableProps<BookmarkListItem>['onChange'] = (pag, filters, s
   bookmarkStore.params.name = filters.name?.toString();
   bookmarkStore.params.description = filters.description?.toString();
   bookmarkStore.params.url = filters.url?.toString();
+
   if (filters.privacy == null) {
     bookmarkStore.params.privacy = null;
   } else {
     bookmarkStore.params.privacy = !!filters.privacy[0];
   }
+
+  if (filters.hideInOther == null) {
+    bookmarkStore.params.hideInOther = null;
+  } else {
+    bookmarkStore.params.hideInOther = !!filters.hideInOther[0];
+  }
+
   if (filters['folder-weight'] == null) {
     bookmarkStore.params.folder = undefined;
   } else {
@@ -408,6 +432,26 @@ const onBatchEdit: MenuProps['onClick'] = e => {
             dataSet: bookmarkStore.selectedRowKeys,
             action: 'setPrivacy',
             payload: form.privacy,
+          });
+        },
+      });
+      break;
+    case 'setHideInOther':
+      form.hideInOther = false;
+      modal.confirm({
+        title: t('actions.setHideInOther'),
+        okText: t('actions.ok'),
+        cancelText: t('actions.cancel'),
+        content: h(SHideForm, {
+          onChange: v => {
+            form.hideInOther = v;
+          },
+        }),
+        onOk() {
+          batchRun({
+            dataSet: bookmarkStore.selectedRowKeys,
+            action: 'setHideInOther',
+            payload: form.hideInOther,
           });
         },
       });

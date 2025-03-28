@@ -64,6 +64,10 @@
     "body": {
       "text": "数据",
       "tip": "请求数据"
+    },
+    "hideInOther": {
+      "text": "隐藏",
+      "tip": "在其他网络环境中隐藏书签"
     }
   },
   "actions": {
@@ -82,6 +86,7 @@
     "clear": "清除",
     "save": "保存",
     "setPrivacy": "设置私密性",
+    "setHideInOther": "设置隐藏",
     "editWeight": "编辑权重",
     "setWeight": "设置权重",
     "incWeight": "增减权重",

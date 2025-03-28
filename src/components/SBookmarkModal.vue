@@ -85,6 +85,9 @@
       <a-form-item :label="t('data.privacy.text')" :tooltip="t('data.privacy.tip')" name="privacy">
         <a-switch v-model:checked="form.privacy"></a-switch>
       </a-form-item>
+      <a-form-item :label="t('data.hideInOther.text')" :tooltip="t('data.hideInOther.tip')" name="hideInOther">
+        <a-switch v-model:checked="form.hideInOther"></a-switch>
+      </a-form-item>
       <a-form-item :label="t('data.folder.text')" :tooltip="t('data.folder.tip')" name="folderId">
         <a-select v-model:value="form.folderId" show-search :options="folderOptions" :filter-option="folderFilterOption"></a-select>
       </a-form-item>
@@ -376,6 +379,7 @@ function generateForm(): BookmarkForm {
     url: '',
     description: '',
     privacy: false,
+    hideInOther: false,
     weight: 0,
     createdTime: '',
     modifiedTime: '',
@@ -401,7 +405,7 @@ async function onOK() {
     return;
   }
 
-  const { id, name, description, url, privacy, weight, folderId } = form;
+  const { id, name, description, url, privacy, hideInOther, weight, folderId } = form;
   let iconValue = '';
   switch (iconSelected.value) {
     case 'builtIn':
@@ -421,6 +425,7 @@ async function onOK() {
       url: url.trim(),
       icon: iconValue,
       privacy,
+      hideInOther,
       weight,
       visits: clearVisitsState.value ? 0 : undefined,
       folderId,
@@ -434,6 +439,7 @@ async function onOK() {
       url: url.trim(),
       icon: iconValue,
       privacy,
+      hideInOther,
       weight,
       folderId,
       files,

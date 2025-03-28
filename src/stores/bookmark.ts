@@ -13,6 +13,7 @@ export const useBookmarkStore = defineStore('bookmark', {
       size: 20,
       order: 'created-time',
       privacy: null,
+      hideInOther: null,
     },
     selectedRowKeys: [],
   }),
