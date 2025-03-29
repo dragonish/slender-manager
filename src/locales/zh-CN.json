@@ -67,7 +67,7 @@
     },
     "hideInOther": {
       "text": "隐藏",
-      "tip": "在其他网络环境中隐藏书签"
+      "tip": "在外部网络环境中隐藏书签"
     }
   },
   "actions": {
@@ -210,7 +210,9 @@
     "openInNewWindow": "始终在新窗口中打开书签",
     "readErr": "无法读取配置！",
     "updated": "配置已更新",
-    "updateErr": "无法更新配置！"
+    "updateErr": "无法更新配置！",
+    "networkSetting": "网络设置",
+    "internalNetwork": "内部网络地址列表。多个值用逗号（,）分隔"
   },
   "about": {
     "appVersion": "程序版本",

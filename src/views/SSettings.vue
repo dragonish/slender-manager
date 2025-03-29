@@ -82,6 +82,16 @@
         <a-button type="primary" :disabled="!status.bookmark" @click="onSave('bookmark')">{{ t('actions.save') }}</a-button>
       </div>
     </a-flex>
+    <a-divider orientation="left">{{ t('settings.networkSetting') }}</a-divider>
+    <a-flex vertical gap="large">
+      <a-flex wrap="wrap">
+        <span>{{ t('settings.internalNetwork') }}:</span>
+        <a-input v-model:value="settings.internalNetwork" @change="onChange('network')"></a-input>
+      </a-flex>
+      <div>
+        <a-button type="primary" :disabled="!status.network" @click="onSave('network')">{{ t('actions.save') }}</a-button>
+      </div>
+    </a-flex>
   </a-spin>
 </template>
 
@@ -93,7 +103,7 @@ import { message } from 'ant-design-vue';
 import { MessageSchema } from '@/locales/schema';
 import { getConfig, updateConfig } from '@/apis/config';
 
-type SettingsType = 'content' | 'element' | 'module' | 'bookmark';
+type SettingsType = 'content' | 'element' | 'module' | 'bookmark' | 'network';
 
 const { t } = useI18n<{
   message: MessageSchema;
@@ -116,6 +126,7 @@ const settings = reactive<SlenderSettings>({
   hotTotal: 0,
   useLetterIcon: false,
   openInNewWindow: false,
+  internalNetwork: '',
 });
 
 const status = reactive<Record<SettingsType, boolean>>({
@@ -123,6 +134,7 @@ const status = reactive<Record<SettingsType, boolean>>({
   element: false,
   module: false,
   bookmark: false,
+  network: false,
 });
 
 const spinning = computed(() => {
@@ -143,8 +155,20 @@ function onChange(key: SettingsType) {
 }
 
 async function onSave(key: SettingsType) {
-  const { title, customFooter, showSidebar, showSearchInput, showScrollTop, showLatest, latestTotal, showHot, hotTotal, useLetterIcon, openInNewWindow } =
-    settings;
+  const {
+    title,
+    customFooter,
+    showSidebar,
+    showSearchInput,
+    showScrollTop,
+    showLatest,
+    latestTotal,
+    showHot,
+    hotTotal,
+    useLetterIcon,
+    openInNewWindow,
+    internalNetwork,
+  } = settings;
 
   let conf: Partial<SlenderSettings> = {};
 
@@ -174,6 +198,11 @@ async function onSave(key: SettingsType) {
       conf = {
         useLetterIcon,
         openInNewWindow,
+      };
+      break;
+    case 'network':
+      conf = {
+        internalNetwork,
       };
       break;
   }

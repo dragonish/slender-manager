@@ -67,7 +67,7 @@
     },
     "hideInOther": {
       "text": "Hide",
-      "tip": "Hide the bookmark in other network environments"
+      "tip": "Hide the bookmark in external network environments"
     }
   },
   "actions": {
@@ -210,7 +210,9 @@
     "openInNewWindow": "Always open the bookmark in the new window",
     "readErr": "Unable to read the config!",
     "updated": "Config updated",
-    "updateErr": "Unable to update config!"
+    "updateErr": "Unable to update config!",
+    "networkSetting": "Network Setting",
+    "internalNetwork": "Internal network address list. Multiple values are separated by commas (,)"
   },
   "about": {
     "appVersion": "Program version",

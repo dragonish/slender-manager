@@ -146,6 +146,7 @@ interface SlenderSettings {
   hotTotal: number;
   useLetterIcon: boolean;
   openInNewWindow: boolean;
+  internalNetwork: string;
 }
 
 interface BatchBody<T = unknown, A extends string> {
