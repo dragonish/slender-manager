@@ -68,6 +68,10 @@
     "hideInOther": {
       "text": "Hide",
       "tip": "Hide the bookmark in external network environments"
+    },
+    "sortBy": {
+      "text": "Sort",
+      "tip": "Sorting rules for bookmarks"
     }
   },
   "actions": {
@@ -107,7 +111,8 @@
     "deleteConfirm": "Are you sure you want to delete this folder? | Are you sure you want to delete these folders?",
     "setLarge": "Set Large",
     "batched": "Complete batch folders",
-    "batchErr": "Unable to batch folders"
+    "batchErr": "Unable to batch folders",
+    "setSortBy": "Set Sort"
   },
   "bookmarks": {
     "visits": "Visits",

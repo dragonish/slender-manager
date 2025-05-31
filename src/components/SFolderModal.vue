@@ -27,6 +27,9 @@
       <a-form-item :label="t('data.privacy.text')" :tooltip="t('data.privacy.tip')" name="privacy">
         <a-switch v-model:checked="form.privacy"></a-switch>
       </a-form-item>
+      <a-form-item :label="t('data.sortBy.text')" :tooltip="t('data.sortBy.tip')" name="sortBy">
+        <a-select v-model:value="form.sortBy" :options="sortByOptions"></a-select>
+      </a-form-item>
       <a-form-item :label="t('data.weight.text')" :tooltip="t('data.weight.tip')" name="weight">
         <a-input-number v-model:value="form.weight" :min="-32768" :max="32767" :step="1"></a-input-number>
       </a-form-item>
@@ -48,6 +51,7 @@ import { MessageSchema } from '@/locales/schema';
 import { message, type FormInstance } from 'ant-design-vue';
 import type { Rule } from 'ant-design-vue/es/form';
 import { addFolder, deleteFolder, getFolder, updateFolder } from '@/apis/folders';
+import { sortByOptions } from '@/common/data';
 
 const { t } = useI18n<{
   message: MessageSchema;
@@ -152,6 +156,7 @@ function generateForm(): FolderBaseData {
     large: false,
     privacy: false,
     weight: 0,
+    sortBy: 'weight',
     createdTime: '',
     modifiedTime: '',
   };
@@ -169,7 +174,7 @@ async function onOK() {
     return;
   }
 
-  const { id, name, description, privacy, large, weight } = form;
+  const { id, name, description, privacy, large, weight, sortBy } = form;
   if (props.edit) {
     // edit
     updateRun(id, {
@@ -178,6 +183,7 @@ async function onOK() {
       privacy,
       large,
       weight,
+      sortBy,
     });
   } else {
     // add
@@ -187,6 +193,7 @@ async function onOK() {
       privacy,
       large,
       weight,
+      sortBy,
     });
   }
 }

@@ -21,9 +21,11 @@ type BookmarkOrder = 'created-time' | 'modified-time' | 'visits' | 'folder-weigh
 type SearchEngineOrder = 'created-time' | 'modified-time' | 'weight';
 type LoginOrder = 'login-time';
 
-type FolderBatchAction = 'delete' | 'setLarge' | 'setPrivacy' | 'setWeight' | 'incWeight';
+type FolderBatchAction = 'delete' | 'setLarge' | 'setPrivacy' | 'setWeight' | 'incWeight' | 'setSortBy';
 type BookmarkBatchAction = 'delete' | 'setPrivacy' | 'setHideInOther' | 'setWeight' | 'incWeight' | 'clearVisits' | 'setFolder';
 type SearchEngineBatchAction = 'delete' | 'setWeight' | 'incWeight';
+
+type SortByType = 'weight' | 'visits' | 'created_time';
 
 type FolderBatchBody<T = unknown> = BatchBody<T, FolderBatchAction>;
 type BookmarkBatchBody<T = unknown> = BatchBody<T, BookmarkBatchAction>;
@@ -44,6 +46,7 @@ interface FolderBaseData {
   large: boolean;
   privacy: boolean;
   weight: number;
+  sortBy: SortByType;
   createdTime: string;
   modifiedTime: string;
 }

@@ -1,14 +1,11 @@
 import { createApp } from 'vue';
 import { setGlobalOptions } from 'vue-request';
-import { createI18n } from 'vue-i18n';
 import { createRouter, createWebHashHistory } from 'vue-router';
 import { createPinia } from 'pinia';
+import i18n from '@/locales/index';
 import App from './App.vue';
 import { requestAdminStatus } from '@/apis/admin';
-import { getLocalLanguage } from './locales/schema';
-import type { MessageSchema } from './locales/schema';
-import en from './locales/en.json';
-import zhCN from './locales/zh-CN.json';
+
 import './style.css';
 
 setGlobalOptions({
@@ -29,16 +26,6 @@ const files = () => import('@/views/SFiles.vue');
 const logins = () => import('@/views/SLogins.vue');
 const settings = () => import('@/views/SSettings.vue');
 const about = () => import('@/views/SAbout.vue');
-
-const i18n = createI18n<[MessageSchema], 'en' | 'zh-CN'>({
-  legacy: false,
-  locale: getLocalLanguage(),
-  fallbackLocale: 'en',
-  messages: {
-    en: en,
-    'zh-CN': zhCN,
-  },
-});
 
 const pinia = createPinia();
 

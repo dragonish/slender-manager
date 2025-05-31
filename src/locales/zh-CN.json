@@ -68,6 +68,10 @@
     "hideInOther": {
       "text": "隐藏",
       "tip": "在外部网络环境中隐藏书签"
+    },
+    "sortBy": {
+      "text": "书签排序",
+      "tip": "书签的排序规则"
     }
   },
   "actions": {
@@ -107,7 +111,8 @@
     "deleteConfirm": "您确定要删除此文件夹吗？ | 您确定要删除这些文件夹吗？",
     "setLarge": "设置大卡片",
     "batched": "批处理文件夹完成",
-    "batchErr": "无法批处理文件夹"
+    "batchErr": "无法批处理文件夹",
+    "setSortBy": "设置书签排序"
   },
   "bookmarks": {
     "visits": "访问量",

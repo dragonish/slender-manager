@@ -24,6 +24,7 @@
               <a-menu-item key="delete">{{ t('actions.delete') }}</a-menu-item>
               <a-menu-item key="setLarge">{{ t('folders.setLarge') }}</a-menu-item>
               <a-menu-item key="setPrivacy">{{ t('actions.setPrivacy') }}</a-menu-item>
+              <a-menu-item key="setSortBy">{{ t('folders.setSortBy') }}</a-menu-item>
               <a-sub-menu key="editWeight" :title="t('actions.editWeight')">
                 <a-menu-item key="setWeight">{{ t('actions.setWeight') }}</a-menu-item>
                 <a-menu-item key="incWeight">{{ t('actions.incWeight') }}</a-menu-item>
@@ -40,6 +41,11 @@
     <template #bodyCell="{ column, record }">
       <template v-if="column.key === 'large' || column.key === 'privacy'">
         <s-bool-state :state="record[column.key]"></s-bool-state>
+      </template>
+      <template v-else-if="column.key === 'sortBy'">
+        <span v-if="record.sortBy === 'visits'">{{ t('data.visits.text') }}</span>
+        <span v-else-if="record.sortBy === 'created_time'">{{ t('data.createdTime.text') }}</span>
+        <span v-else>{{ t('data.weight.text') }}</span>
       </template>
       <template v-else-if="column.key === 'action'">
         <a-space>
@@ -83,6 +89,7 @@ import SFolderModal from '@/components/SFolderModal.vue';
 import SLargeForm from '@/components/SLargeForm.vue';
 import SPrivacyForm from '@/components/SPrivacyForm.vue';
 import SWeightForm from '@/components/SWeightForm.vue';
+import SSortForm from '@/components/SSortForm.vue';
 import SFilterDropdown from '@/components/SFilterDropdown.vue';
 
 const { t } = useI18n<{
@@ -112,6 +119,7 @@ const form = reactive({
   large: false,
   privacy: false,
   weight: 0,
+  sortBy: 'weight',
 });
 
 const [modal, contextHolder] = Modal.useModal();
@@ -171,6 +179,12 @@ const columns: TableColumnType<FolderListItem>[] = [
     key: 'weight',
     dataIndex: 'weight',
     title: t('data.weight.text'),
+    align: 'center',
+  },
+  {
+    key: 'sortBy',
+    dataIndex: 'sortBy',
+    title: t('data.sortBy.text'),
     align: 'center',
   },
   {
@@ -359,6 +373,26 @@ const onBatchEdit: MenuProps['onClick'] = e => {
             dataSet: folderStore.selectedRowKeys,
             action: key,
             payload: form.weight,
+          });
+        },
+      });
+      break;
+    case 'setSortBy':
+      form.sortBy = 'weight';
+      modal.confirm({
+        title: t('folders.setSortBy'),
+        okText: t('actions.ok'),
+        cancelText: t('actions.cancel'),
+        content: h(SSortForm, {
+          onChange: v => {
+            form.sortBy = v;
+          },
+        }),
+        onOk() {
+          batchRun({
+            dataSet: folderStore.selectedRowKeys,
+            action: 'setSortBy',
+            payload: form.sortBy,
           });
         },
       });
