@@ -3,17 +3,33 @@ interface highlightItem {
   highlight: boolean;
 }
 
-const urlReg = new RegExp('{(?:host|hostname|href|origin|pathname|port|protocol)}', 'g');
+const urlReg = new RegExp('{(?:host|hostname|domain|href|origin|pathname|port|protocol)}', 'g');
 const placeholderReg = new RegExp('%s', 'g');
 
-export const urlKeys: Array<keyof Location> = ['host', 'hostname', 'href', 'origin', 'pathname', 'port', 'protocol'];
+export const urlKeys: Array<URLKey> = ['host', 'hostname', 'domain', 'href', 'origin', 'pathname', 'port', 'protocol'];
 
-export function getLocation(key: keyof Location): string {
-  const res = location[key];
-  if (typeof res !== 'string') {
-    return key;
+export function getLocation(key: URLKey): string {
+  if (key === 'domain') {
+    return getDomain(location.hostname);
+  } else {
+    const res = location[key];
+    if (typeof res !== 'string') {
+      return key;
+    }
+    return res;
   }
-  return res;
+}
+
+export function getDomain(hostname: string): string {
+  const parts = hostname.split('.');
+  const partsLen = parts.length;
+  if (partsLen <= 2) {
+    return hostname;
+  } else if (partsLen === 4 && /^\d+\.\d+\.\d+\.\d+$/.test(hostname)) {
+    return hostname;
+  }
+
+  return parts.splice(1).join('.');
 }
 
 export function findKeys(text: string, isPlaceholder = false): highlightItem[] {

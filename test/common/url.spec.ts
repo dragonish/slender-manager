@@ -1,6 +1,6 @@
 import 'mocha';
 import { expect } from 'chai';
-import { findKeys, pathMatcher } from '@/common/url';
+import { findKeys, pathMatcher, getDomain } from '@/common/url';
 
 describe('Test url', function () {
   it('findKeys', function () {
@@ -48,5 +48,15 @@ describe('Test url', function () {
     expect(pathMatcher('/abc', ['/abc'])).to.be.true;
     expect(pathMatcher('/abc', ['/ab', '/abcd'])).to.be.true;
     expect(pathMatcher('/abc', ['/abcd', '/abc/'])).to.be.false;
+  });
+
+  it('getDomain', function () {
+    expect(getDomain('test.example.com')).to.eq('example.com');
+    expect(getDomain('abc.test.example.com')).to.eq('test.example.com');
+    expect(getDomain('example.com')).to.eq('example.com');
+    expect(getDomain('192.168.1.1')).to.eq('192.168.1.1');
+    expect(getDomain('127.0.0.1')).to.eq('127.0.0.1');
+    expect(getDomain('localhost')).to.eq('localhost');
+    expect(getDomain('::1')).to.eq('::1');
   });
 });

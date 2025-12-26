@@ -33,6 +33,8 @@ type SearchEngineBatchBody<T = unknown> = BatchBody<T, SearchEngineBatchAction>;
 
 type SearchEngineMethod = 'GET' | 'POST';
 
+type URLKey = keyof Location | 'domain';
+
 interface PageData {
   pageSize: number;
   pageNo: number;

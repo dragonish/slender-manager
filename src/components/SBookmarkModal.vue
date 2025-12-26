@@ -517,7 +517,7 @@ function onFilePreview(file: UploadFile<{ data: FileBaseData }>) {
   }
 }
 
-function onTagClick(key: keyof Location, mode: 'url' | 'intranet') {
+function onTagClick(key: URLKey, mode: 'url' | 'intranet') {
   if (mode === 'url') {
     form.url += `{${key}}`;
     if (form.url) {
