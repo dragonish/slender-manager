@@ -42,7 +42,7 @@
       </a-space>
     </template>
     <template #bodyCell="{ column, record }">
-      <template v-if="column.key === 'url'">
+      <template v-if="column.key === 'url' || column.key === 'intranet'">
         <s-bookmark-url :url="record[column.key]"></s-bookmark-url>
       </template>
       <template v-else-if="column.key === 'icon'">
@@ -207,6 +207,21 @@ const columns: TableColumnType<BookmarkListItem>[] = [
     filterIcon: customFilterIcon,
   },
   {
+    key: 'intranet',
+    dataIndex: 'intranet',
+    title: t('data.intranet.text'),
+    customFilterDropdown: true,
+    onFilterDropdownOpenChange: visible => {
+      if (visible) {
+        window.setTimeout(() => {
+          filterDropdown.value?.focus();
+        }, 100);
+      }
+    },
+    defaultFilteredValue: bookmarkStore.params.intranet ? [bookmarkStore.params.intranet] : undefined,
+    filterIcon: customFilterIcon,
+  },
+  {
     key: 'description',
     dataIndex: 'description',
     title: t('data.description.text'),
@@ -328,6 +343,7 @@ const onTableChange: TableProps<BookmarkListItem>['onChange'] = (pag, filters, s
   bookmarkStore.params.name = filters.name?.toString();
   bookmarkStore.params.description = filters.description?.toString();
   bookmarkStore.params.url = filters.url?.toString();
+  bookmarkStore.params.intranet = filters.intranet?.toString();
 
   if (filters.privacy == null) {
     bookmarkStore.params.privacy = null;
@@ -525,10 +541,11 @@ async function onImport() {
           const importData: BookmarkImportItem[] = [];
           for (const item of importArr) {
             if (item) {
-              const { url = '', name = '', description = '', icon = '', privacy = false, weight = 0 } = item as BookmarkImportItem;
+              const { url = '', intranet = '', name = '', description = '', icon = '', privacy = false, weight = 0 } = item as BookmarkImportItem;
               if (url.toString().trim()) {
                 importData.push({
                   url: url.toString().trim(),
+                  intranet: intranet.toString().trim(),
                   name: name.toString().trim(),
                   description: description.toString().trim(),
                   icon: icon.toString().trim(),
@@ -561,10 +578,11 @@ async function onExport() {
     const list: BookmarkListItem[] = data.value[1]?.list || [];
     const exportList: BookmarkImportItem[] = [];
     for (const item of list) {
-      const { id, url, name, description, icon, privacy, weight } = item;
+      const { id, url, intranet, name, description, icon, privacy, weight } = item;
       if (bookmarkStore.selectedRowKeys.includes(id)) {
         exportList.push({
           url,
+          intranet,
           name,
           description,
           icon,

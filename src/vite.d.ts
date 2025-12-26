@@ -64,6 +64,7 @@ type FolderBody = Omit<FolderBaseData, 'id' | 'createdTime' | 'modifiedTime'>;
 interface BookmarkBaseData {
   id: number;
   url: string;
+  intranet: string;
   name: string;
   description: string;
   icon: string;
@@ -87,6 +88,7 @@ interface BookmarkListData extends PageData {
 interface BookmarkBody {
   name: string;
   url: string;
+  intranet: string;
   description: string;
   icon: string;
   privacy: boolean;
@@ -160,6 +162,7 @@ interface BatchBody<T = unknown, A extends string> {
 
 interface BookmarkImportItem {
   url: string;
+  intranet: string;
   name: string;
   description: string;
   icon: string;

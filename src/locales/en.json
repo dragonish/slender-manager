@@ -17,6 +17,10 @@
       "text": "URL",
       "tip": "entry url"
     },
+    "intranet": {
+      "text": "Intranet",
+      "tip": "URL used on the intranet"
+    },
     "description": {
       "text": "Description",
       "tip": "entry detail"

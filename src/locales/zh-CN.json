@@ -17,6 +17,10 @@
       "text": "网址",
       "tip": "条目网址"
     },
+    "intranet": {
+      "text": "内网",
+      "tip": "在内部网络环境中使用的网址"
+    },
     "description": {
       "text": "描述",
       "tip": "条目详情"

@@ -25,11 +25,19 @@
       </a-form-item>
       <a-form-item :label="t('data.url.text')" :tooltip="t('data.url.tip')" name="url">
         <template #extra>
-          <template v-for="item in urlKeys" :key="item">
-            <a-tag class="slender-bookmark-extra-tag" :title="getLocation(item)" @click="onTagClick(item)">{{ item }}</a-tag>
-          </template>
+          <a-tag v-for="item in urlKeys" :key="item" class="slender-bookmark-extra-tag" :title="getLocation(item)" @click="onTagClick(item, 'url')">
+            {{ item }}
+          </a-tag>
         </template>
         <a-input v-model:value="form.url"></a-input>
+      </a-form-item>
+      <a-form-item :label="t('data.intranet.text')" :tooltip="t('data.intranet.tip')" name="intranet">
+        <template #extra>
+          <a-tag v-for="item in urlKeys" :key="item" class="slender-bookmark-extra-tag" :title="getLocation(item)" @click="onTagClick(item, 'intranet')">
+            {{ item }}
+          </a-tag>
+        </template>
+        <a-input v-model:value="form.intranet"></a-input>
       </a-form-item>
       <a-form-item :label="t('data.description.text')" :tooltip="t('data.description.tip')" name="description">
         <a-input v-model:value="form.description"></a-input>
@@ -379,6 +387,7 @@ function generateForm(): BookmarkForm {
     id: 0,
     name: '',
     url: '',
+    intranet: '',
     description: '',
     privacy: false,
     hideInOther: false,
@@ -407,7 +416,7 @@ async function onOK() {
     return;
   }
 
-  const { id, name, description, url, privacy, hideInOther, weight, folderId } = form;
+  const { id, name, description, url, intranet, privacy, hideInOther, weight, folderId } = form;
   let iconValue = '';
   switch (iconSelected.value) {
     case 'builtIn':
@@ -425,6 +434,7 @@ async function onOK() {
       name: name.trim(),
       description: description.trim(),
       url: url.trim(),
+      intranet: intranet.trim(),
       icon: iconValue,
       privacy,
       hideInOther,
@@ -439,6 +449,7 @@ async function onOK() {
       name: name.trim(),
       description: description.trim(),
       url: url.trim(),
+      intranet: intranet.trim(),
       icon: iconValue,
       privacy,
       hideInOther,
@@ -506,10 +517,14 @@ function onFilePreview(file: UploadFile<{ data: FileBaseData }>) {
   }
 }
 
-function onTagClick(key: keyof Location) {
-  form.url += `{${key}}`;
-  if (form.url) {
-    formRef.value?.validate();
+function onTagClick(key: keyof Location, mode: 'url' | 'intranet') {
+  if (mode === 'url') {
+    form.url += `{${key}}`;
+    if (form.url) {
+      formRef.value?.validate();
+    }
+  } else {
+    form.intranet += `{${key}}`;
   }
 }
 </script>

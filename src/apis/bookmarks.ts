@@ -9,6 +9,7 @@ export interface BookmarkListParams {
   name?: string;
   description?: string;
   url?: string;
+  intranet?: string;
   folder?: number;
 }
 
@@ -31,7 +32,9 @@ export function getBookmarkList(params: BookmarkListParams) {
   return ajaxGet<BookmarkListData>(
     `/bookmarks?page=${params.page}&size=${params.size}&order=${params.order}&privacy=${pr}&hide-in-other=${h}&name=${encodeURIComponent(
       params.name || ''
-    )}&description=${encodeURIComponent(params.description || '')}&url=${encodeURIComponent(params.url || '')}&folder=${f}`
+    )}&description=${encodeURIComponent(params.description || '')}&url=${encodeURIComponent(params.url || '')}&intranet=${encodeURIComponent(
+      params.intranet || ''
+    )}&folder=${f}`
   );
 }
 
