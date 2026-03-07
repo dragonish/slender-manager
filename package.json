@@ -50,7 +50,7 @@
     "globals": "^16.5.0",
     "less": "^4.5.1",
     "less-loader": "^12.3.0",
-    "lodash-es": "^4.17.22",
+    "lodash-es": "^4.17.23",
     "mocha": "^11.7.5",
     "tsx": "^4.21.0",
     "typescript": "^5.9.3",
