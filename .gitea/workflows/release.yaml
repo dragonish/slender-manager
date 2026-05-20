@@ -13,18 +13,18 @@ jobs:
       HTTPS_PROXY: ${{ vars.PROXY }}
     steps:
       - name: Checkout code
-        uses: actions/checkout@v4
+        uses: actions/checkout@v6
         with:
           fetch-depth: 0
           fetch-tags: true
       - name: Setup pnpm
-        uses: pnpm/action-setup@v4
+        uses: pnpm/action-setup@v5
         with:
-          version: 10
+          version: 11
       - name: Setup Node
-        uses: actions/setup-node@v4
+        uses: actions/setup-node@v6
         with:
-          node-version: 24
+          node-version: 'lts/*'
           cache: 'pnpm'
       - name: Build package
         run: |
@@ -62,8 +62,14 @@ jobs:
 
             See: [${{ steps.git_tags.outputs.prev }}...${{ steps.git_tags.outputs.current }}](/compare/${{ steps.git_tags.outputs.prev }}...${{ steps.git_tags.outputs.current }})
       - name: Send notification
-        if: ${{ !cancelled() && vars.CHAT_URL != '' }}
-        uses: dragonish/send-to-synology-chat@v1
+        if: ${{ !cancelled() && secrets.NTFY_URL != '' && secrets.NTFY_TOPIC != '' && secrets.NTFY_TOKEN != '' }}
+        uses: dragonish/send-to-ntfy@v1
         with:
-          webhook-url: ${{ vars.CHAT_URL }}
-          message: "${{ gitea.repository }}\n\n${{ steps.git_tags.outputs.current }}\n\n#${{ job.status }}"
+          base-url: ${{ secrets.NTFY_URL }}
+          topic: ${{ secrets.NTFY_TOPIC }}
+          access-token: ${{ secrets.NTFY_TOKEN }}
+          title: ${{ gitea.repository }}
+          message: "Release ${{ steps.git_tags.outputs.current }}"
+          tags: "tea,building_construction,release,${{ job.status }}"
+          priority: 2
+          click: "${{ vars.WEB_SERVER }}/${{ gitea.repository }}/releases/tag/${{ steps.git_tags.outputs.current }}"
