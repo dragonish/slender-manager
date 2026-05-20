@@ -76,6 +76,10 @@
     "sortBy": {
       "text": "Sort",
       "tip": "Sorting rules for bookmarks"
+    },
+    "enabled": {
+      "text": "Enabled",
+      "tip": "enabled status"
     }
   },
   "actions": {
@@ -100,7 +104,8 @@
     "incWeight": "Inc Weight",
     "download": "Download",
     "clean": "Clean",
-    "copy": "Copy"
+    "copy": "Copy",
+    "setEnabled": "Set Enabled"
   },
   "folders": {
     "bookmarkTotal": "Bookmark Total",

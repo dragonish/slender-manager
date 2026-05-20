@@ -23,6 +23,7 @@
             <a-menu @click="onBatchEdit">
               <a-menu-item key="delete">{{ t('actions.delete') }}</a-menu-item>
               <a-menu-item key="clearVisits">{{ t('bookmarks.clearVisits') }}</a-menu-item>
+              <a-menu-item key="setEnabled">{{ t('actions.setEnabled') }}</a-menu-item>
               <a-menu-item key="setPrivacy">{{ t('actions.setPrivacy') }}</a-menu-item>
               <a-menu-item key="setHideInOther">{{ t('actions.setHideInOther') }}</a-menu-item>
               <a-menu-item key="setFolder">{{ t('bookmarks.setFolder') }}</a-menu-item>
@@ -54,7 +55,7 @@
           :src="getBuiltInIcon(record[column.key]) || record[column.key]"
         ></a-avatar>
       </template>
-      <template v-else-if="column.key === 'privacy' || column.key === 'hideInOther'">
+      <template v-else-if="column.key === 'privacy' || column.key === 'hideInOther' || column.key === 'enabled'">
         <s-bool-state :state="record[column.key]"></s-bool-state>
       </template>
       <template v-else-if="column.key === 'action'">
@@ -106,6 +107,7 @@ import SWeightForm from '@/components/SWeightForm.vue';
 import SFolderForm from '@/components/SFolderForm.vue';
 import SBookmarkUrl from '@/components/SBookmarkUrl.vue';
 import SFilterDropdown from '@/components/SFilterDropdown.vue';
+import SEnabledForm from '@/components/SEnabledForm.vue';
 
 const { t } = useI18n<{
   message: MessageSchema;
@@ -130,7 +132,7 @@ const { run: folderRun, loading: folderLoading } = useRequest(getBookmarkFolderL
         ...data[1].map(item => ({
           text: item.name,
           value: item.id,
-        }))
+        })),
       );
     }
   },
@@ -162,6 +164,7 @@ const filterDropdown = ref<InstanceType<typeof SFilterDropdown> | null>();
 const form = reactive({
   privacy: false,
   hideInOther: false,
+  enabled: true,
   weight: 0,
   folder: 0,
 });
@@ -235,6 +238,19 @@ const columns: TableColumnType<BookmarkListItem>[] = [
     },
     defaultFilteredValue: bookmarkStore.params.description ? [bookmarkStore.params.description] : undefined,
     filterIcon: customFilterIcon,
+  },
+  {
+    key: 'enabled',
+    dataIndex: 'enabled',
+    title: t('data.enabled.text'),
+    align: 'center',
+    width: 100,
+    filters: [
+      { text: t('actions.yes'), value: true },
+      { text: t('actions.no'), value: false },
+    ],
+    filterMultiple: false,
+    defaultFilteredValue: bookmarkStore.params.enabled == null ? undefined : [bookmarkStore.params.enabled.toString()],
   },
   {
     key: 'privacy',
@@ -355,6 +371,12 @@ const onTableChange: TableProps<BookmarkListItem>['onChange'] = (pag, filters, s
     bookmarkStore.params.hideInOther = null;
   } else {
     bookmarkStore.params.hideInOther = !!filters.hideInOther[0];
+  }
+
+  if (filters.enabled == null) {
+    bookmarkStore.params.enabled = null;
+  } else {
+    bookmarkStore.params.enabled = !!filters.enabled[0];
   }
 
   if (filters['folder-weight'] == null) {
@@ -483,6 +505,26 @@ const onBatchEdit: MenuProps['onClick'] = e => {
         },
       });
       break;
+    case 'setEnabled':
+      form.enabled = true;
+      modal.confirm({
+        title: t('actions.setEnabled'),
+        okText: t('actions.ok'),
+        cancelText: t('actions.cancel'),
+        content: h(SEnabledForm, {
+          onChange: v => {
+            form.enabled = v;
+          },
+        }),
+        onOk() {
+          batchRun({
+            dataSet: bookmarkStore.selectedRowKeys,
+            action: 'setEnabled',
+            payload: form.enabled,
+          });
+        },
+      });
+      break;
     case 'setWeight':
     case 'incWeight':
       form.weight = 0;
@@ -541,7 +583,16 @@ async function onImport() {
           const importData: BookmarkImportItem[] = [];
           for (const item of importArr) {
             if (item) {
-              const { url = '', intranet = '', name = '', description = '', icon = '', privacy = false, weight = 0 } = item as BookmarkImportItem;
+              const {
+                url = '',
+                intranet = '',
+                name = '',
+                description = '',
+                icon = '',
+                privacy = false,
+                weight = 0,
+                enabled = true,
+              } = item as BookmarkImportItem;
               if (url.toString().trim()) {
                 importData.push({
                   url: url.toString().trim(),
@@ -551,6 +602,7 @@ async function onImport() {
                   icon: icon.toString().trim(),
                   privacy: !!privacy,
                   weight: parseInt(weight.toString()) || 0,
+                  enabled: !!enabled,
                 });
               }
             }
@@ -578,7 +630,7 @@ async function onExport() {
     const list: BookmarkListItem[] = data.value[1]?.list || [];
     const exportList: BookmarkImportItem[] = [];
     for (const item of list) {
-      const { id, url, intranet, name, description, icon, privacy, weight } = item;
+      const { id, url, intranet, name, description, icon, privacy, weight, enabled } = item;
       if (bookmarkStore.selectedRowKeys.includes(id)) {
         exportList.push({
           url,
@@ -588,6 +640,7 @@ async function onExport() {
           icon,
           privacy,
           weight,
+          enabled,
         });
       }
     }

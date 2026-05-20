@@ -76,6 +76,10 @@
     "sortBy": {
       "text": "书签排序",
       "tip": "书签的排序规则"
+    },
+    "enabled": {
+      "text": "启用",
+      "tip": "启用状态"
     }
   },
   "actions": {
@@ -94,13 +98,14 @@
     "clear": "清除",
     "save": "保存",
     "setPrivacy": "设置私密性",
-    "setHideInOther": "设置隐藏",
+    "setHideInOther": "设置隐藏状态",
     "editWeight": "编辑权重",
     "setWeight": "设置权重",
     "incWeight": "增减权重",
     "download": "下载",
     "clean": "清理",
-    "copy": "复制"
+    "copy": "复制",
+    "setEnabled": "设置启用状态"
   },
   "folders": {
     "bookmarkTotal": "书签数量",

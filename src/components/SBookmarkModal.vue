@@ -90,6 +90,9 @@
           </div>
         </div>
       </a-form-item>
+      <a-form-item :label="t('data.enabled.text')" :tooltip="t('data.enabled.tip')" name="enabled">
+        <a-switch v-model:checked="form.enabled"></a-switch>
+      </a-form-item>
       <a-form-item :label="t('data.privacy.text')" :tooltip="t('data.privacy.tip')" name="privacy">
         <a-switch v-model:checked="form.privacy"></a-switch>
       </a-form-item>
@@ -349,7 +352,7 @@ watch(
         nameInput.value?.focus();
       });
     }
-  }
+  },
 );
 
 const onSegmentedChange: SegmentedProps['onChange'] = value => {
@@ -389,6 +392,7 @@ function generateForm(): BookmarkForm {
     url: '',
     intranet: '',
     description: '',
+    enabled: true,
     privacy: false,
     hideInOther: false,
     weight: 0,
@@ -416,7 +420,7 @@ async function onOK() {
     return;
   }
 
-  const { id, name, description, url, intranet, privacy, hideInOther, weight, folderId } = form;
+  const { id, name, description, url, intranet, enabled, privacy, hideInOther, weight, folderId } = form;
   let iconValue = '';
   switch (iconSelected.value) {
     case 'builtIn':
@@ -436,6 +440,7 @@ async function onOK() {
       url: url.trim(),
       intranet: intranet.trim(),
       icon: iconValue,
+      enabled,
       privacy,
       hideInOther,
       weight,
@@ -451,6 +456,7 @@ async function onOK() {
       url: url.trim(),
       intranet: intranet.trim(),
       icon: iconValue,
+      enabled,
       privacy,
       hideInOther,
       weight,

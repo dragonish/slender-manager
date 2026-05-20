@@ -22,7 +22,7 @@ type SearchEngineOrder = 'created-time' | 'modified-time' | 'weight';
 type LoginOrder = 'login-time';
 
 type FolderBatchAction = 'delete' | 'setLarge' | 'setPrivacy' | 'setWeight' | 'incWeight' | 'setSortBy';
-type BookmarkBatchAction = 'delete' | 'setPrivacy' | 'setHideInOther' | 'setWeight' | 'incWeight' | 'clearVisits' | 'setFolder';
+type BookmarkBatchAction = 'delete' | 'setPrivacy' | 'setHideInOther' | 'setWeight' | 'incWeight' | 'clearVisits' | 'setFolder' | 'setEnabled';
 type SearchEngineBatchAction = 'delete' | 'setWeight' | 'incWeight';
 
 type SortByType = 'weight' | 'visits' | 'created_time';
@@ -77,6 +77,7 @@ interface BookmarkBaseData {
   visits: number;
   folderId: number;
   hideInOther: boolean;
+  enabled: boolean;
 }
 
 interface BookmarkListItem extends BookmarkBaseData {
@@ -95,6 +96,7 @@ interface BookmarkBody {
   icon: string;
   privacy: boolean;
   hideInOther: boolean;
+  enabled: boolean;
   weight: number;
   folderId: number;
   files: number[];
@@ -170,6 +172,7 @@ interface BookmarkImportItem {
   icon: string;
   privacy: boolean;
   weight: number;
+  enabled: boolean;
 }
 
 interface LoginBaseData {
