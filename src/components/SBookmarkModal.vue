@@ -3,6 +3,7 @@
     v-model:open="open"
     :title="t('bookmarks.modalTitle', { msg: edit ? t('actions.edit') : t('actions.add') })"
     :confirm-loading="fetching"
+    width="600px"
     @cancel="onCancel"
   >
     <template #footer>
