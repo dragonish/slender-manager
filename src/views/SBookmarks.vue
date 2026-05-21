@@ -184,13 +184,7 @@ const columns: TableColumnType<BookmarkListItem>[] = [
     dataIndex: 'name',
     title: t('data.name.text'),
     customFilterDropdown: true,
-    onFilterDropdownOpenChange: visible => {
-      if (visible) {
-        window.setTimeout(() => {
-          filterDropdown.value?.focus();
-        }, 100);
-      }
-    },
+    onFilterDropdownOpenChange,
     defaultFilteredValue: bookmarkStore.params.name ? [bookmarkStore.params.name] : undefined,
     filterIcon: customFilterIcon,
   },
@@ -199,13 +193,7 @@ const columns: TableColumnType<BookmarkListItem>[] = [
     dataIndex: 'url',
     title: t('data.url.text'),
     customFilterDropdown: true,
-    onFilterDropdownOpenChange: visible => {
-      if (visible) {
-        window.setTimeout(() => {
-          filterDropdown.value?.focus();
-        }, 100);
-      }
-    },
+    onFilterDropdownOpenChange,
     defaultFilteredValue: bookmarkStore.params.url ? [bookmarkStore.params.url] : undefined,
     filterIcon: customFilterIcon,
   },
@@ -214,13 +202,7 @@ const columns: TableColumnType<BookmarkListItem>[] = [
     dataIndex: 'intranet',
     title: t('data.intranet.text'),
     customFilterDropdown: true,
-    onFilterDropdownOpenChange: visible => {
-      if (visible) {
-        window.setTimeout(() => {
-          filterDropdown.value?.focus();
-        }, 100);
-      }
-    },
+    onFilterDropdownOpenChange,
     defaultFilteredValue: bookmarkStore.params.intranet ? [bookmarkStore.params.intranet] : undefined,
     filterIcon: customFilterIcon,
   },
@@ -229,13 +211,7 @@ const columns: TableColumnType<BookmarkListItem>[] = [
     dataIndex: 'description',
     title: t('data.description.text'),
     customFilterDropdown: true,
-    onFilterDropdownOpenChange: visible => {
-      if (visible) {
-        window.setTimeout(() => {
-          filterDropdown.value?.focus();
-        }, 100);
-      }
-    },
+    onFilterDropdownOpenChange,
     defaultFilteredValue: bookmarkStore.params.description ? [bookmarkStore.params.description] : undefined,
     filterIcon: customFilterIcon,
   },
@@ -658,6 +634,14 @@ async function onExport() {
     }
   } else {
     message.error(t('bookmarks.exportErr'));
+  }
+}
+
+function onFilterDropdownOpenChange(visible: boolean) {
+  if (visible) {
+    window.setTimeout(() => {
+      filterDropdown.value?.focus();
+    }, 100);
   }
 }
 </script>
