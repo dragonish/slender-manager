@@ -567,6 +567,7 @@ async function onImport() {
                 icon = '',
                 privacy = false,
                 weight = 0,
+                hideInOther = false,
                 enabled = true,
               } = item as BookmarkImportItem;
               if (url.toString().trim()) {
@@ -578,6 +579,7 @@ async function onImport() {
                   icon: icon.toString().trim(),
                   privacy: !!privacy,
                   weight: parseInt(weight.toString()) || 0,
+                  hideInOther: !!hideInOther,
                   enabled: !!enabled,
                 });
               }
@@ -606,7 +608,7 @@ async function onExport() {
     const list: BookmarkListItem[] = data.value[1]?.list || [];
     const exportList: BookmarkImportItem[] = [];
     for (const item of list) {
-      const { id, url, intranet, name, description, icon, privacy, weight, enabled } = item;
+      const { id, url, intranet, name, description, icon, privacy, weight, hideInOther, enabled } = item;
       if (bookmarkStore.selectedRowKeys.includes(id)) {
         exportList.push({
           url,
@@ -616,6 +618,7 @@ async function onExport() {
           icon,
           privacy,
           weight,
+          hideInOther,
           enabled,
         });
       }

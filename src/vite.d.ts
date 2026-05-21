@@ -172,6 +172,7 @@ interface BookmarkImportItem {
   icon: string;
   privacy: boolean;
   weight: number;
+  hideInOther: boolean;
   enabled: boolean;
 }
 
