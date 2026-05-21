@@ -80,6 +80,10 @@
     "enabled": {
       "text": "启用",
       "tip": "启用状态"
+    },
+    "enabledHosts": {
+      "text": "启用主机",
+      "tip": "仅在指定主机时启用"
     }
   },
   "actions": {
@@ -105,7 +109,8 @@
     "download": "下载",
     "clean": "清理",
     "copy": "复制",
-    "setEnabled": "设置启用状态"
+    "setEnabled": "设置启用状态",
+    "setEnabledHosts": "设置启用主机"
   },
   "folders": {
     "bookmarkTotal": "书签数量",
@@ -150,7 +155,10 @@
     "exported": "书签已导出",
     "exportErr": "无法导出书签！",
     "builtInIcon": "内置",
-    "inputIcon": "输入"
+    "inputIcon": "输入",
+    "hosts": "以逗号分隔的主机列表",
+    "host": "主机",
+    "hostTip": "插入当前主机"
   },
   "searchEngines": {
     "modalTitle": "{msg}搜索引擎",

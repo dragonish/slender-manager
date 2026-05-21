@@ -80,6 +80,10 @@
     "enabled": {
       "text": "Enabled",
       "tip": "enabled status"
+    },
+    "enabledHosts": {
+      "text": "Enabled Hosts",
+      "tip": "Enabled only on specified hosts"
     }
   },
   "actions": {
@@ -105,7 +109,8 @@
     "download": "Download",
     "clean": "Clean",
     "copy": "Copy",
-    "setEnabled": "Set Enabled"
+    "setEnabled": "Set Enabled",
+    "setEnabledHosts": "Set Enabled Hosts"
   },
   "folders": {
     "bookmarkTotal": "Bookmark Total",
@@ -150,7 +155,10 @@
     "exported": "Bookmarks exported",
     "exportErr": "Unable to export bookmarks!",
     "builtInIcon": "Built-in",
-    "inputIcon": "Input"
+    "inputIcon": "Input",
+    "hosts": "the comma-separated list of hosts",
+    "host": "Host",
+    "hostTip": "Insert current host"
   },
   "searchEngines": {
     "modalTitle": "{msg} search engine",

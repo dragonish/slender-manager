@@ -23,9 +23,10 @@
             <a-menu @click="onBatchEdit">
               <a-menu-item key="delete">{{ t('actions.delete') }}</a-menu-item>
               <a-menu-item key="clearVisits">{{ t('bookmarks.clearVisits') }}</a-menu-item>
-              <a-menu-item key="setEnabled">{{ t('actions.setEnabled') }}</a-menu-item>
               <a-menu-item key="setPrivacy">{{ t('actions.setPrivacy') }}</a-menu-item>
               <a-menu-item key="setHideInOther">{{ t('actions.setHideInOther') }}</a-menu-item>
+              <a-menu-item key="setEnabled">{{ t('actions.setEnabled') }}</a-menu-item>
+              <a-menu-item key="setEnabledHosts">{{ t('actions.setEnabledHosts') }}</a-menu-item>
               <a-menu-item key="setFolder">{{ t('bookmarks.setFolder') }}</a-menu-item>
               <a-menu-item key="export">{{ t('bookmarks.export') }}</a-menu-item>
               <a-sub-menu key="editWeight" :title="t('actions.editWeight')">
@@ -108,6 +109,7 @@ import SFolderForm from '@/components/SFolderForm.vue';
 import SBookmarkUrl from '@/components/SBookmarkUrl.vue';
 import SFilterDropdown from '@/components/SFilterDropdown.vue';
 import SEnabledForm from '@/components/SEnabledForm.vue';
+import SHostsForm from '@/components/SHostsForm.vue';
 
 const { t } = useI18n<{
   message: MessageSchema;
@@ -165,6 +167,7 @@ const form = reactive({
   privacy: false,
   hideInOther: false,
   enabled: true,
+  enabledHosts: '',
   weight: 0,
   folder: 0,
 });
@@ -216,19 +219,6 @@ const columns: TableColumnType<BookmarkListItem>[] = [
     filterIcon: customFilterIcon,
   },
   {
-    key: 'enabled',
-    dataIndex: 'enabled',
-    title: t('data.enabled.text'),
-    align: 'center',
-    width: 100,
-    filters: [
-      { text: t('actions.yes'), value: true },
-      { text: t('actions.no'), value: false },
-    ],
-    filterMultiple: false,
-    defaultFilteredValue: bookmarkStore.params.enabled == null ? undefined : [bookmarkStore.params.enabled.toString()],
-  },
-  {
     key: 'privacy',
     dataIndex: 'privacy',
     title: t('data.privacy.text'),
@@ -253,6 +243,28 @@ const columns: TableColumnType<BookmarkListItem>[] = [
     ],
     filterMultiple: false,
     defaultFilteredValue: bookmarkStore.params.hideInOther == null ? undefined : [bookmarkStore.params.hideInOther.toString()],
+  },
+  {
+    key: 'enabled',
+    dataIndex: 'enabled',
+    title: t('data.enabled.text'),
+    align: 'center',
+    width: 100,
+    filters: [
+      { text: t('actions.yes'), value: true },
+      { text: t('actions.no'), value: false },
+    ],
+    filterMultiple: false,
+    defaultFilteredValue: bookmarkStore.params.enabled == null ? undefined : [bookmarkStore.params.enabled.toString()],
+  },
+  {
+    key: 'enabled-hosts',
+    dataIndex: 'enabledHosts',
+    title: t('data.enabledHosts.text'),
+    customFilterDropdown: true,
+    onFilterDropdownOpenChange,
+    defaultFilteredValue: bookmarkStore.params.enabledHosts ? [bookmarkStore.params.enabledHosts] : undefined,
+    filterIcon: customFilterIcon,
   },
   {
     key: 'folder-weight',
@@ -336,6 +348,7 @@ const onTableChange: TableProps<BookmarkListItem>['onChange'] = (pag, filters, s
   bookmarkStore.params.description = filters.description?.toString();
   bookmarkStore.params.url = filters.url?.toString();
   bookmarkStore.params.intranet = filters.intranet?.toString();
+  bookmarkStore.params.enabledHosts = filters['enabled-hosts']?.toString();
 
   if (filters.privacy == null) {
     bookmarkStore.params.privacy = null;
@@ -501,6 +514,26 @@ const onBatchEdit: MenuProps['onClick'] = e => {
         },
       });
       break;
+    case 'setEnabledHosts':
+      form.enabledHosts = '';
+      modal.confirm({
+        title: t('actions.setEnabledHosts'),
+        okText: t('actions.ok'),
+        cancelText: t('actions.cancel'),
+        content: h(SHostsForm, {
+          onChange: v => {
+            form.enabledHosts = v;
+          },
+        }),
+        onOk() {
+          batchRun({
+            dataSet: bookmarkStore.selectedRowKeys,
+            action: 'setEnabledHosts',
+            payload: form.enabledHosts,
+          });
+        },
+      });
+      break;
     case 'setWeight':
     case 'incWeight':
       form.weight = 0;
@@ -569,6 +602,7 @@ async function onImport() {
                 weight = 0,
                 hideInOther = false,
                 enabled = true,
+                enabledHosts = '',
               } = item as BookmarkImportItem;
               if (url.toString().trim()) {
                 importData.push({
@@ -581,6 +615,7 @@ async function onImport() {
                   weight: parseInt(weight.toString()) || 0,
                   hideInOther: !!hideInOther,
                   enabled: !!enabled,
+                  enabledHosts: enabledHosts.toString().trim(),
                 });
               }
             }
@@ -608,7 +643,7 @@ async function onExport() {
     const list: BookmarkListItem[] = data.value[1]?.list || [];
     const exportList: BookmarkImportItem[] = [];
     for (const item of list) {
-      const { id, url, intranet, name, description, icon, privacy, weight, hideInOther, enabled } = item;
+      const { id, url, intranet, name, description, icon, privacy, weight, hideInOther, enabled, enabledHosts } = item;
       if (bookmarkStore.selectedRowKeys.includes(id)) {
         exportList.push({
           url,
@@ -620,6 +655,7 @@ async function onExport() {
           weight,
           hideInOther,
           enabled,
+          enabledHosts,
         });
       }
     }

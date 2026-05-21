@@ -7,6 +7,7 @@ export interface BookmarkListParams {
   privacy: boolean | null;
   hideInOther: boolean | null;
   enabled: boolean | null;
+  enabledHosts?: string;
   name?: string;
   description?: string;
   url?: string;
@@ -36,7 +37,7 @@ export function getBookmarkList(params: BookmarkListParams) {
   }
 
   return ajaxGet<BookmarkListData>(
-    `/bookmarks?page=${params.page}&size=${params.size}&order=${params.order}&privacy=${pr}&hide-in-other=${h}&enabled=${e}&name=${encodeURIComponent(
+    `/bookmarks?page=${params.page}&size=${params.size}&order=${params.order}&privacy=${pr}&hide-in-other=${h}&enabled=${e}&enabled-hosts=${encodeURIComponent(params.enabledHosts || '')}&name=${encodeURIComponent(
       params.name || '',
     )}&description=${encodeURIComponent(params.description || '')}&url=${encodeURIComponent(params.url || '')}&intranet=${encodeURIComponent(
       params.intranet || '',

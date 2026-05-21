@@ -90,14 +90,20 @@
           </div>
         </div>
       </a-form-item>
-      <a-form-item :label="t('data.enabled.text')" :tooltip="t('data.enabled.tip')" name="enabled">
-        <a-switch v-model:checked="form.enabled"></a-switch>
-      </a-form-item>
       <a-form-item :label="t('data.privacy.text')" :tooltip="t('data.privacy.tip')" name="privacy">
         <a-switch v-model:checked="form.privacy"></a-switch>
       </a-form-item>
       <a-form-item :label="t('data.hideInOther.text')" :tooltip="t('data.hideInOther.tip')" name="hideInOther">
         <a-switch v-model:checked="form.hideInOther"></a-switch>
+      </a-form-item>
+      <a-form-item :label="t('data.enabled.text')" :tooltip="t('data.enabled.tip')" name="enabled">
+        <a-switch v-model:checked="form.enabled"></a-switch>
+      </a-form-item>
+      <a-form-item :label="t('data.enabledHosts.text')" :tooltip="t('data.enabledHosts.tip')" name="enabledHosts">
+        <a-space-compact block>
+          <a-input v-model:value="form.enabledHosts" :placeholder="t('bookmarks.hosts')"></a-input>
+          <a-button :title="t('bookmarks.hostTip')" @click="onInsertCurrentHost">{{ t('bookmarks.host') }}</a-button>
+        </a-space-compact>
       </a-form-item>
       <a-form-item :label="t('data.folder.text')" :tooltip="t('data.folder.tip')" name="folderId">
         <a-select v-model:value="form.folderId" show-search :options="folderOptions" :filter-option="folderFilterOption"></a-select>
@@ -393,6 +399,7 @@ function generateForm(): BookmarkForm {
     intranet: '',
     description: '',
     enabled: true,
+    enabledHosts: '',
     privacy: false,
     hideInOther: false,
     weight: 0,
@@ -412,6 +419,19 @@ function onClearVisits() {
   clearVisitsState.value = true;
 }
 
+function onInsertCurrentHost() {
+  const curList = form.enabledHosts
+    .trim()
+    .split(',')
+    .map(v => v.trim())
+    .filter(v => v);
+  const host = window.location.host;
+  if (!curList.includes(host)) {
+    curList.push(host);
+  }
+  form.enabledHosts = curList.join(',');
+}
+
 async function onOK() {
   try {
     await formRef.value?.validate();
@@ -420,7 +440,7 @@ async function onOK() {
     return;
   }
 
-  const { id, name, description, url, intranet, enabled, privacy, hideInOther, weight, folderId } = form;
+  const { id, name, description, url, intranet, enabled, enabledHosts, privacy, hideInOther, weight, folderId } = form;
   let iconValue = '';
   switch (iconSelected.value) {
     case 'builtIn':
@@ -441,6 +461,7 @@ async function onOK() {
       intranet: intranet.trim(),
       icon: iconValue,
       enabled,
+      enabledHosts,
       privacy,
       hideInOther,
       weight,
@@ -457,6 +478,7 @@ async function onOK() {
       intranet: intranet.trim(),
       icon: iconValue,
       enabled,
+      enabledHosts,
       privacy,
       hideInOther,
       weight,
