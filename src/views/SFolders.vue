@@ -86,11 +86,10 @@ import { batchFolder, getFolderList } from '@/apis/folders';
 import { customFilterIcon } from '@/common/ui';
 import SBoolState from '@/components/SBoolState.vue';
 import SFolderModal from '@/components/SFolderModal.vue';
-import SLargeForm from '@/components/SLargeForm.vue';
-import SPrivacyForm from '@/components/SPrivacyForm.vue';
 import SWeightForm from '@/components/SWeightForm.vue';
 import SSortForm from '@/components/SSortForm.vue';
 import SFilterDropdown from '@/components/SFilterDropdown.vue';
+import SBoolForm from '@/components/SBoolForm.vue';
 
 const { t } = useI18n<{
   message: MessageSchema;
@@ -321,7 +320,9 @@ const onBatchEdit: MenuProps['onClick'] = e => {
         title: t('folders.setLarge'),
         okText: t('actions.ok'),
         cancelText: t('actions.cancel'),
-        content: h(SLargeForm, {
+        content: h(SBoolForm, {
+          label: t('data.large.text'),
+          tooltip: t('data.large.tip'),
           onChange: v => {
             form.large = v;
           },
@@ -341,7 +342,9 @@ const onBatchEdit: MenuProps['onClick'] = e => {
         title: t('actions.setPrivacy'),
         okText: t('actions.ok'),
         cancelText: t('actions.cancel'),
-        content: h(SPrivacyForm, {
+        content: h(SBoolForm, {
+          label: t('data.privacy.text'),
+          tooltip: t('data.privacy.tip'),
           onChange: v => {
             form.privacy = v;
           },

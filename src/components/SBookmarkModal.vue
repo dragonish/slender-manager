@@ -97,6 +97,9 @@
       <a-form-item :label="t('data.hideInOther.text')" :tooltip="t('data.hideInOther.tip')" name="hideInOther">
         <a-switch v-model:checked="form.hideInOther"></a-switch>
       </a-form-item>
+      <a-form-item :label="t('data.hideInMobile.text')" :tooltip="t('data.hideInMobile.tip')" name="hideInMobile">
+        <a-switch v-model:checked="form.hideInMobile"></a-switch>
+      </a-form-item>
       <a-form-item :label="t('data.enabled.text')" :tooltip="t('data.enabled.tip')" name="enabled">
         <a-switch v-model:checked="form.enabled"></a-switch>
       </a-form-item>
@@ -403,6 +406,7 @@ function generateForm(): BookmarkForm {
     enabledHosts: '',
     privacy: false,
     hideInOther: false,
+    hideInMobile: false,
     weight: 0,
     createdTime: '',
     modifiedTime: '',
@@ -441,7 +445,7 @@ async function onOK() {
     return;
   }
 
-  const { id, name, description, url, intranet, enabled, enabledHosts, privacy, hideInOther, weight, folderId } = form;
+  const { id, name, description, url, intranet, enabled, enabledHosts, privacy, hideInOther, hideInMobile, weight, folderId } = form;
   let iconValue = '';
   switch (iconSelected.value) {
     case 'builtIn':
@@ -465,6 +469,7 @@ async function onOK() {
       enabledHosts,
       privacy,
       hideInOther,
+      hideInMobile,
       weight,
       visits: clearVisitsState.value ? 0 : undefined,
       folderId,
@@ -482,6 +487,7 @@ async function onOK() {
       enabledHosts,
       privacy,
       hideInOther,
+      hideInMobile,
       weight,
       folderId,
       files,

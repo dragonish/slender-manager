@@ -26,6 +26,7 @@ type BookmarkBatchAction =
   | 'delete'
   | 'setPrivacy'
   | 'setHideInOther'
+  | 'setHideInMobile'
   | 'setWeight'
   | 'incWeight'
   | 'clearVisits'
@@ -86,6 +87,7 @@ interface BookmarkBaseData {
   visits: number;
   folderId: number;
   hideInOther: boolean;
+  hideInMobile: boolean;
   enabled: boolean;
   enabledHosts: string;
 }
@@ -106,6 +108,7 @@ interface BookmarkBody {
   icon: string;
   privacy: boolean;
   hideInOther: boolean;
+  hideInMobile: boolean;
   enabled: boolean;
   enabledHosts: string;
   weight: number;
@@ -184,6 +187,7 @@ interface BookmarkImportItem {
   privacy: boolean;
   weight: number;
   hideInOther: boolean;
+  hideInMobile: boolean;
   enabled: boolean;
   enabledHosts: string;
 }

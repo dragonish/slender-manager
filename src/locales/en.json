@@ -70,8 +70,12 @@
       "tip": "Request data"
     },
     "hideInOther": {
-      "text": "Hide",
+      "text": "Other",
       "tip": "Hide the bookmark in external network environments"
+    },
+    "hideInMobile": {
+      "text": "Mobile",
+      "tip": "Hide the bookmark in the mobile"
     },
     "sortBy": {
       "text": "Sort",
@@ -102,7 +106,8 @@
     "clear": "Clear",
     "save": "Save",
     "setPrivacy": "Set Privacy",
-    "setHideInOther": "Set Hide",
+    "setHideInOther": "Set Hide In Other",
+    "setHideInMobile": "Set Hide In Mobile",
     "editWeight": "Edit Weight",
     "setWeight": "Set Weight",
     "incWeight": "Inc Weight",

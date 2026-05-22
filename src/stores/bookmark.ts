@@ -14,6 +14,7 @@ export const useBookmarkStore = defineStore('bookmark', {
       order: 'created-time',
       privacy: null,
       hideInOther: null,
+      hideInMobile: null,
       enabled: null,
     },
     selectedRowKeys: [],

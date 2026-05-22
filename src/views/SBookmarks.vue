@@ -25,6 +25,7 @@
               <a-menu-item key="clearVisits">{{ t('bookmarks.clearVisits') }}</a-menu-item>
               <a-menu-item key="setPrivacy">{{ t('actions.setPrivacy') }}</a-menu-item>
               <a-menu-item key="setHideInOther">{{ t('actions.setHideInOther') }}</a-menu-item>
+              <a-menu-item key="setHideInMobile">{{ t('actions.setHideInMobile') }}</a-menu-item>
               <a-menu-item key="setEnabled">{{ t('actions.setEnabled') }}</a-menu-item>
               <a-menu-item key="setEnabledHosts">{{ t('actions.setEnabledHosts') }}</a-menu-item>
               <a-menu-item key="setFolder">{{ t('bookmarks.setFolder') }}</a-menu-item>
@@ -56,7 +57,7 @@
           :src="getBuiltInIcon(record[column.key]) || record[column.key]"
         ></a-avatar>
       </template>
-      <template v-else-if="column.key === 'privacy' || column.key === 'hideInOther' || column.key === 'enabled'">
+      <template v-else-if="column.key === 'privacy' || column.key === 'hideInOther' || column.key === 'hideInMobile' || column.key === 'enabled'">
         <s-bool-state :state="record[column.key]"></s-bool-state>
       </template>
       <template v-else-if="column.key === 'action'">
@@ -102,14 +103,12 @@ import { openTextFile, downloadTextFile } from '@/common/file';
 import { customFilterIcon } from '@/common/ui';
 import SBoolState from '@/components/SBoolState.vue';
 import SBookmarkModal from '@/components/SBookmarkModal.vue';
-import SPrivacyForm from '@/components/SPrivacyForm.vue';
-import SHideForm from '@/components/SHideForm.vue';
 import SWeightForm from '@/components/SWeightForm.vue';
 import SFolderForm from '@/components/SFolderForm.vue';
 import SBookmarkUrl from '@/components/SBookmarkUrl.vue';
 import SFilterDropdown from '@/components/SFilterDropdown.vue';
-import SEnabledForm from '@/components/SEnabledForm.vue';
 import SHostsForm from '@/components/SHostsForm.vue';
+import SBoolForm from '@/components/SBoolForm.vue';
 
 const { t } = useI18n<{
   message: MessageSchema;
@@ -166,7 +165,8 @@ const filterDropdown = ref<InstanceType<typeof SFilterDropdown> | null>();
 const form = reactive({
   privacy: false,
   hideInOther: false,
-  enabled: true,
+  hideInMobile: false,
+  enabled: false,
   enabledHosts: '',
   weight: 0,
   folder: 0,
@@ -243,6 +243,19 @@ const columns: TableColumnType<BookmarkListItem>[] = [
     ],
     filterMultiple: false,
     defaultFilteredValue: bookmarkStore.params.hideInOther == null ? undefined : [bookmarkStore.params.hideInOther.toString()],
+  },
+  {
+    key: 'hideInMobile',
+    dataIndex: 'hideInMobile',
+    title: t('data.hideInMobile.text'),
+    align: 'center',
+    width: 100,
+    filters: [
+      { text: t('actions.yes'), value: true },
+      { text: t('actions.no'), value: false },
+    ],
+    filterMultiple: false,
+    defaultFilteredValue: bookmarkStore.params.hideInMobile == null ? undefined : [bookmarkStore.params.hideInMobile.toString()],
   },
   {
     key: 'enabled',
@@ -362,6 +375,12 @@ const onTableChange: TableProps<BookmarkListItem>['onChange'] = (pag, filters, s
     bookmarkStore.params.hideInOther = !!filters.hideInOther[0];
   }
 
+  if (filters.hideInMobile == null) {
+    bookmarkStore.params.hideInMobile = null;
+  } else {
+    bookmarkStore.params.hideInMobile = !!filters.hideInMobile[0];
+  }
+
   if (filters.enabled == null) {
     bookmarkStore.params.enabled = null;
   } else {
@@ -460,7 +479,9 @@ const onBatchEdit: MenuProps['onClick'] = e => {
         title: t('actions.setPrivacy'),
         okText: t('actions.ok'),
         cancelText: t('actions.cancel'),
-        content: h(SPrivacyForm, {
+        content: h(SBoolForm, {
+          label: t('data.privacy.text'),
+          tooltip: t('data.privacy.tip'),
           onChange: v => {
             form.privacy = v;
           },
@@ -480,7 +501,9 @@ const onBatchEdit: MenuProps['onClick'] = e => {
         title: t('actions.setHideInOther'),
         okText: t('actions.ok'),
         cancelText: t('actions.cancel'),
-        content: h(SHideForm, {
+        content: h(SBoolForm, {
+          label: t('data.hideInOther.text'),
+          tooltip: t('data.hideInOther.tip'),
           onChange: v => {
             form.hideInOther = v;
           },
@@ -494,13 +517,37 @@ const onBatchEdit: MenuProps['onClick'] = e => {
         },
       });
       break;
+    case 'setHideInMobile':
+      form.hideInMobile = false;
+      modal.confirm({
+        title: t('actions.setHideInMobile'),
+        okText: t('actions.ok'),
+        cancelText: t('actions.cancel'),
+        content: h(SBoolForm, {
+          label: t('data.hideInMobile.text'),
+          tooltip: t('data.hideInMobile.tip'),
+          onChange: v => {
+            form.hideInMobile = v;
+          },
+        }),
+        onOk() {
+          batchRun({
+            dataSet: bookmarkStore.selectedRowKeys,
+            action: 'setHideInMobile',
+            payload: form.hideInMobile,
+          });
+        },
+      });
+      break;
     case 'setEnabled':
-      form.enabled = true;
+      form.enabled = false;
       modal.confirm({
         title: t('actions.setEnabled'),
         okText: t('actions.ok'),
         cancelText: t('actions.cancel'),
-        content: h(SEnabledForm, {
+        content: h(SBoolForm, {
+          label: t('data.enabled.text'),
+          tooltip: t('data.enabled.tip'),
           onChange: v => {
             form.enabled = v;
           },
@@ -601,6 +648,7 @@ async function onImport() {
                 privacy = false,
                 weight = 0,
                 hideInOther = false,
+                hideInMobile = false,
                 enabled = true,
                 enabledHosts = '',
               } = item as BookmarkImportItem;
@@ -614,6 +662,7 @@ async function onImport() {
                   privacy: !!privacy,
                   weight: parseInt(weight.toString()) || 0,
                   hideInOther: !!hideInOther,
+                  hideInMobile: !!hideInMobile,
                   enabled: !!enabled,
                   enabledHosts: enabledHosts.toString().trim(),
                 });
@@ -643,7 +692,7 @@ async function onExport() {
     const list: BookmarkListItem[] = data.value[1]?.list || [];
     const exportList: BookmarkImportItem[] = [];
     for (const item of list) {
-      const { id, url, intranet, name, description, icon, privacy, weight, hideInOther, enabled, enabledHosts } = item;
+      const { id, url, intranet, name, description, icon, privacy, weight, hideInOther, hideInMobile, enabled, enabledHosts } = item;
       if (bookmarkStore.selectedRowKeys.includes(id)) {
         exportList.push({
           url,
@@ -654,6 +703,7 @@ async function onExport() {
           privacy,
           weight,
           hideInOther,
+          hideInMobile,
           enabled,
           enabledHosts,
         });

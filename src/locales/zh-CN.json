@@ -70,8 +70,12 @@
       "tip": "请求数据"
     },
     "hideInOther": {
-      "text": "隐藏",
+      "text": "外部隐藏",
       "tip": "在外部网络环境中隐藏书签"
+    },
+    "hideInMobile": {
+      "text": "移动隐藏",
+      "tip": "在移动端时隐藏书签"
     },
     "sortBy": {
       "text": "书签排序",
@@ -102,7 +106,8 @@
     "clear": "清除",
     "save": "保存",
     "setPrivacy": "设置私密性",
-    "setHideInOther": "设置隐藏状态",
+    "setHideInOther": "设置外部网络隐藏状态",
+    "setHideInMobile": "设置移动端隐藏状态",
     "editWeight": "编辑权重",
     "setWeight": "设置权重",
     "incWeight": "增减权重",

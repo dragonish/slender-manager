@@ -6,6 +6,7 @@ export interface BookmarkListParams {
   order: BookmarkOrder;
   privacy: boolean | null;
   hideInOther: boolean | null;
+  hideInMobile: boolean | null;
   enabled: boolean | null;
   enabledHosts?: string;
   name?: string;
@@ -26,6 +27,11 @@ export function getBookmarkList(params: BookmarkListParams) {
     h = params.hideInOther ? '1' : '0';
   }
 
+  let hm = '';
+  if (params.hideInMobile != null) {
+    hm = params.hideInMobile ? '1' : '0';
+  }
+
   let f = '';
   if (params.folder != undefined) {
     f = params.folder.toString();
@@ -37,7 +43,7 @@ export function getBookmarkList(params: BookmarkListParams) {
   }
 
   return ajaxGet<BookmarkListData>(
-    `/bookmarks?page=${params.page}&size=${params.size}&order=${params.order}&privacy=${pr}&hide-in-other=${h}&enabled=${e}&enabled-hosts=${encodeURIComponent(params.enabledHosts || '')}&name=${encodeURIComponent(
+    `/bookmarks?page=${params.page}&size=${params.size}&order=${params.order}&privacy=${pr}&hide-in-other=${h}&hide-in-mobile=${hm}&enabled=${e}&enabled-hosts=${encodeURIComponent(params.enabledHosts || '')}&name=${encodeURIComponent(
       params.name || '',
     )}&description=${encodeURIComponent(params.description || '')}&url=${encodeURIComponent(params.url || '')}&intranet=${encodeURIComponent(
       params.intranet || '',
